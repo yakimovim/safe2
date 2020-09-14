@@ -1,0 +1,15 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Safe" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="Salt" Type="System.String" Scope="User">
+      <Value Profile="(Default)">2921E7D8-CF66-463E-BB5D-9A681AE2498B</Value>
+    </Setting>
+    <Setting Name="Language" Type="System.String" Scope="User">
+      <Value Profile="(Default)">en-US</Value>
+    </Setting>
+    <Setting Name="StoragePath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">./storage.dat</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

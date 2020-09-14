@@ -1,4 +1,6 @@
 ﻿using Prism.Ioc;
+using Safe.Core.Services;
+using Safe.Services;
 using Safe.Views;
 using System.Windows;
 
@@ -16,7 +18,8 @@ namespace Safe
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-
+            containerRegistry.RegisterSingleton<IMapper, Mapper>();
+            containerRegistry.RegisterSingleton<IConfigurationService, ConfigurationService>();
         }
     }
 }
