@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Safe.Core.Domain;
+using System.Text;
 
 namespace Safe.Services
 {
@@ -16,8 +17,14 @@ namespace Safe.Services
         {
             var config = new MapperConfiguration(cfg =>
                     {
-                        cfg.CreateMap<Settings, Configuration>();
-                        cfg.CreateMap<IConfiguration, Settings>();
+                        cfg.CreateMap<Settings, Configuration>()
+                            .ForMember(c => c.Salt, act => {
+                                act.MapFrom(s => Encoding.ASCII.GetBytes(s.Salt));
+                            });
+                        cfg.CreateMap<IConfiguration, Settings>()
+                            .ForMember(s => s.Salt, act => {
+                                act.MapFrom(c => Encoding.ASCII.GetString(c.Salt));
+                            });
                     }
                 );
             _mapper = new AutoMapper.Mapper(config);

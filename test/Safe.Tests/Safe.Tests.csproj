@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Safe.Core\Safe.Core.csproj" />
+    <ProjectReference Include="..\..\src\Safe\Safe.csproj" />
   </ItemGroup>
 
 </Project>

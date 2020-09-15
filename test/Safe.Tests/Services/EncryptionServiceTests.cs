@@ -14,17 +14,15 @@ namespace Safe.Tests.Services
 
         public EncryptionServiceTests()
         {
-            var salt = Encoding.ASCII.GetBytes("014659A4-76CA-43D7-8A53-B35E218F6CDD");
-
-            var configurationMoq = new Mock<IConfiguration>();
-            configurationMoq
-                .Setup(config => config.Salt)
-                .Returns(salt);
+            var configuration = new Configuration
+            {
+                Salt = Encoding.ASCII.GetBytes("014659A4-76CA-43D7-8A53-B35E218F6CDD")
+            };
 
             var configurationServiceMoq = new Mock<IConfigurationService>();
             configurationServiceMoq
                 .Setup(service => service.GetConfiguration())
-                .Returns(configurationMoq.Object);
+                .Returns(configuration);
 
             _configurationService = configurationServiceMoq.Object;
         }
@@ -37,17 +35,19 @@ namespace Safe.Tests.Services
 
             var service = new EncryptionService(_configurationService);
 
+            var pwd = new Password(password);
+
             // Act
 
             var stream = new MemoryStream();
 
-            service.Encrypt(password, initialText, stream);
+            service.Encrypt(pwd, initialText, stream);
 
             var buffer = stream.ToArray();
 
             stream = new MemoryStream(buffer);
 
-            var decryptedText = service.Decrypt<string>(password, stream);
+            var decryptedText = service.Decrypt<string>(pwd, stream);
 
             // Assert
 

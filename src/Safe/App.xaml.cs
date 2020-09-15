@@ -20,6 +20,7 @@ namespace Safe
         {
             containerRegistry.RegisterSingleton<IMapper, Mapper>();
             containerRegistry.RegisterSingleton<IConfigurationService, ConfigurationService>();
+            containerRegistry.RegisterSingleton<IStorageStreamProvider, StorageStreamProvider>();
         }
     }
 }

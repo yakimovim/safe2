@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Safe.Core.Domain;
+using System;
+using System.Diagnostics;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Security.Cryptography;
@@ -16,7 +18,7 @@ namespace Safe.Core.Services
         /// <param name="password">Password.</param>
         /// <param name="valueToEncrypt">Value to encrypt.</param>
         /// <param name="targetStream">Stream to encrypt to.</param>
-        void Encrypt(string password, object valueToEncrypt, Stream targetStream);
+        void Encrypt(Password password, object valueToEncrypt, Stream targetStream);
         /// <summary>
         /// Decrypts object of type <typeparamref name="T"/> from the <paramref name="sourceStream"/> stream.
         /// </summary>
@@ -24,22 +26,26 @@ namespace Safe.Core.Services
         /// <param name="password">Password.</param>
         /// <param name="sourceStream">Stream to decrypt from.</param>
         /// <returns></returns>
-        T Decrypt<T>(string password, Stream sourceStream);
+        T Decrypt<T>(Password password, Stream sourceStream);
     }
 
     public class EncryptionService : IEncryptionService
     {
         private readonly IConfigurationService _configurationService;
 
+        [DebuggerStepThrough]
         public EncryptionService(IConfigurationService configurationService)
         {
             _configurationService = configurationService ?? throw new ArgumentNullException(nameof(configurationService));
         }
 
-        public void Encrypt(string password, object valueToEncrypt, Stream targetStream)
+        public void Encrypt(Password password, object valueToEncrypt, Stream targetStream)
         {
-            if (string.IsNullOrEmpty(password))
-                throw new ArgumentException("Password can't be null or empty.", nameof(password));
+            if (password is null)
+            {
+                throw new ArgumentNullException(nameof(password));
+            }
+
             if (targetStream is null)
                 throw new ArgumentNullException(nameof(targetStream));
 
@@ -58,10 +64,13 @@ namespace Safe.Core.Services
             }
         }
 
-        public T Decrypt<T>(string password, Stream sourceStream)
+        public T Decrypt<T>(Password password, Stream sourceStream)
         {
-            if (string.IsNullOrEmpty(password))
-                throw new ArgumentException("Password can't be null or empty.", nameof(password));
+            if (password is null)
+            {
+                throw new ArgumentNullException(nameof(password));
+            }
+
             if (sourceStream is null)
                 throw new ArgumentNullException(nameof(sourceStream));
 
