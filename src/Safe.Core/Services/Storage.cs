@@ -105,9 +105,7 @@ namespace Safe.Core.Services
 
             var container = new Container();
 
-            _password = password;
-
-            Save(container);
+            InternalSave(container, password);
         }
 
         public bool Login(Password password)
@@ -163,9 +161,24 @@ namespace Safe.Core.Services
             if (!Exists) throw new InvalidOperationException("Storage does not exist.");
             if (!LoggedIn) throw new InvalidOperationException("You are not logged in");
 
+            InternalSave(container, _password);
+        }
+
+        private void InternalSave(Container container, Password password)
+        {
+            if (container is null)
+            {
+                throw new ArgumentNullException(nameof(container));
+            }
+
+            if (password is null)
+            {
+                throw new ArgumentNullException(nameof(password));
+            }
+
             using (var writeStream = _storageStreamProvider.GetWriteStream())
             {
-                _encryptionService.Encrypt(_password, container, writeStream);
+                _encryptionService.Encrypt(password, container, writeStream);
             }
         }
     }

@@ -1,7 +1,7 @@
 ﻿using Safe.Core.Services;
 using System.IO;
 
-namespace Safe.Tests.Domain.Utilities
+namespace Safe.Tests.Services.Utilities
 {
     public class FakeStorageStreamProvider : IStorageStreamProvider
     {

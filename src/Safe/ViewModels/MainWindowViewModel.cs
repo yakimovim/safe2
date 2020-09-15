@@ -13,7 +13,6 @@ namespace Safe.ViewModels
 
         public MainWindowViewModel()
         {
-
         }
     }
 }

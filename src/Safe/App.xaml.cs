@@ -21,6 +21,11 @@ namespace Safe
             containerRegistry.RegisterSingleton<IMapper, Mapper>();
             containerRegistry.RegisterSingleton<IConfigurationService, ConfigurationService>();
             containerRegistry.RegisterSingleton<IStorageStreamProvider, StorageStreamProvider>();
+            containerRegistry.RegisterSingleton<IEncryptionService, EncryptionService>();
+            containerRegistry.RegisterSingleton<IStorage, Storage>();
+
+            containerRegistry.RegisterForNavigation<LoginView>();
+            containerRegistry.RegisterForNavigation<CreateStorageView>();
         }
     }
 }
