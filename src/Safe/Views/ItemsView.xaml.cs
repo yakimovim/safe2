@@ -1,5 +1,4 @@
-﻿using Safe.ViewModels;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Windows;
@@ -15,22 +14,13 @@ using System.Windows.Shapes;
 namespace Safe.Views
 {
     /// <summary>
-    /// Interaction logic for LoginView.xaml
+    /// Interaction logic for ItemsView.xaml
     /// </summary>
-    public partial class LoginView : UserControl
+    public partial class ItemsView : UserControl
     {
-        public LoginView()
+        public ItemsView()
         {
             InitializeComponent();
         }
-
-        private void PasswordChanged(object sender, RoutedEventArgs e)
-        {
-            var viewModel = DataContext as LoginViewModel;
-            if (viewModel == null) return;
-
-            viewModel.SetPassword(pwdBox.Password);
-        }
-
     }
 }

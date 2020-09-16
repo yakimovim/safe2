@@ -26,6 +26,8 @@ namespace Safe
 
             containerRegistry.RegisterForNavigation<LoginView>();
             containerRegistry.RegisterForNavigation<CreateStorageView>();
+            containerRegistry.RegisterForNavigation<ItemsView>();
+            containerRegistry.RegisterForNavigation<CreateNewItemView>();
         }
     }
 }

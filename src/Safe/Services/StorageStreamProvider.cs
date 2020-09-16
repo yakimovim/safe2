@@ -40,8 +40,6 @@ namespace Safe.Services
         /// <inheritdoc/>
         public Stream GetWriteStream()
         {
-            if (!StorageExists) throw new InvalidOperationException("Storage does not exist");
-
             var configuration = _configurationService.GetConfiguration();
 
             return File.OpenWrite(configuration.StoragePath);

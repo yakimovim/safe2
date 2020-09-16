@@ -4,9 +4,21 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Safe.Views"
+             xmlns:prism="http://prismlibrary.com/"
+             prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <TextBlock Text="Login" />
-    </Grid>
+    <StackPanel Orientation="Vertical">
+        <TextBlock Text="Login:"
+                   HorizontalAlignment="Center"
+                   FontSize="50"
+                   Margin="40"
+                   />
+        <PasswordBox x:Name="pwdBox"
+            PasswordChanged="PasswordChanged"
+            Width="300"
+            FontSize="30"
+            Margin="10"/>
+        <Button Content="Login" Width="100" FontSize="30" Margin="10" Command="{Binding LoginCommand}" />
+    </StackPanel>
 </UserControl>
