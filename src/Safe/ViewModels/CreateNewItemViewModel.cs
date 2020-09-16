@@ -1,11 +1,12 @@
 ﻿using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
+using Safe.Core.Domain;
 using System;
 
 namespace Safe.ViewModels
 {
-    public class CreateNewItemViewModel : BindableBase
+    public class CreateNewItemViewModel : BindableBase, INavigationAware
     {
         private readonly IRegionManager _regionManager;
 
@@ -38,8 +39,23 @@ namespace Safe.ViewModels
 
         private void Create()
         {
-            _regionManager.RequestNavigate("ContentRegion", "ItemsView");
+            var item = new Item
+            {
+                Title = Title,
+                Description = Description
+            };
+
+            var p = new NavigationParameters();
+            p.Add("NewItem", item);
+
+            _regionManager.RequestNavigate("ContentRegion", "ItemsView", p);
         }
+
+        public void OnNavigatedTo(NavigationContext navigationContext) { }
+
+        public bool IsNavigationTarget(NavigationContext navigationContext) => false;
+
+        public void OnNavigatedFrom(NavigationContext navigationContext) { }
 
         public DelegateCommand CreateCommand { get; }
 

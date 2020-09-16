@@ -38,6 +38,8 @@ namespace Safe.ViewModels
 
             _storage.Create(password);
 
+            _storage.Login(password);
+
             _regionManager.RequestNavigate("ContentRegion", "ItemsView");
         }
 
