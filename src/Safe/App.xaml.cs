@@ -1,5 +1,6 @@
 ﻿using Prism.Ioc;
 using Safe.Core.Services;
+using Safe.Dialogs;
 using Safe.Services;
 using Safe.Views;
 using System.Windows;
@@ -28,6 +29,9 @@ namespace Safe
             containerRegistry.RegisterForNavigation<CreateStorageView>();
             containerRegistry.RegisterForNavigation<ItemsView>();
             containerRegistry.RegisterForNavigation<CreateNewItemView>();
+            containerRegistry.RegisterForNavigation<EditItemView>();
+
+            containerRegistry.RegisterDialog<AddFieldsDialog, AddFieldsDialogViewModel>();
         }
     }
 }

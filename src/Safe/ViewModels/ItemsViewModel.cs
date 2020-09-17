@@ -4,7 +4,7 @@ using Prism.Mvvm;
 using Prism.Regions;
 using Safe.Core.Domain;
 using Safe.Core.Services;
-using Safe.Events;
+using Safe.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -12,13 +12,14 @@ using System.Linq;
 
 namespace Safe.ViewModels
 {
-    public class ItemsViewModel : BindableBase, INavigationAware
+    public class ItemsViewModel : BindableBase, INavigationAware, IContainer<Domain.ItemViewModel>
     {
         private readonly IStorage _storage;
         private readonly IRegionManager _regionManager;
         private readonly IEventAggregator _eventAggregator;
+        private readonly IMapper _mapper;
         private readonly Container _container;
-        private readonly List<ItemViewModel> _allItems;
+        private readonly List<Domain.ItemViewModel> _allItems;
 
         private string _searchText;
 
@@ -28,60 +29,43 @@ namespace Safe.ViewModels
             set { SetProperty(ref _searchText, value); }
         }
 
-        public ObservableCollection<ItemViewModel> Items { get; } = new ObservableCollection<ItemViewModel>();
+        public ObservableCollection<Domain.ItemViewModel> Items { get; } 
+            = new ObservableCollection<Domain.ItemViewModel>();
 
         public ItemsViewModel(
             IStorage storage,
             IRegionManager regionManager,
-            IEventAggregator eventAggregator
+            IEventAggregator eventAggregator,
+            IMapper mapper
             )
         {
             _storage = storage ?? throw new ArgumentNullException(nameof(storage));
             _regionManager = regionManager ?? throw new ArgumentNullException(nameof(regionManager));
             _eventAggregator = eventAggregator ?? throw new ArgumentNullException(nameof(eventAggregator));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+
             _container = _storage.Read();
 
-            _allItems = _container.Items.Select(i => new ItemViewModel(i, _eventAggregator)).ToList();
+            _allItems = _container.Items
+                .Select(i => new Domain.ItemViewModel(i, this, _mapper, _regionManager))
+                .ToList();
 
             Items.AddRange(_allItems);
 
             CreateNewItemCommand = new DelegateCommand(CreateNewItem);
-
-            _eventAggregator.GetEvent<DeleteItemEvent>().Subscribe(OnDelete);
-        }
-
-        private void OnDelete(ItemViewModel itemViewModel)
-        {
-            _allItems.Remove(itemViewModel);
-
-            Items.Remove(itemViewModel);
-
-            _container.Items.Remove(itemViewModel.Item);
-
-            _storage.Save(_container);
         }
 
         private void CreateNewItem()
         {
-            _regionManager.RequestNavigate("ContentRegion", "CreateNewItemView");
+            var p = new NavigationParameters();
+            p.Add("Item", new Domain.ItemViewModel(new Item(), this, _mapper, _regionManager));
+            p.Add("IsEditing", false);
+
+            _regionManager.RequestNavigate("ContentRegion", "EditItemView", p);
         }
 
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
-            if(navigationContext.Parameters.ContainsKey("NewItem"))
-            {
-                var newItem = (Item)navigationContext.Parameters["NewItem"];
-
-                var newItemViewModel = new ItemViewModel(newItem, _eventAggregator);
-
-                _allItems.Add(newItemViewModel);
-
-                Items.Add(newItemViewModel);
-
-                _container.Items.Add(newItem);
-
-                _storage.Save(_container);
-            }
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext) => true;
@@ -89,6 +73,42 @@ namespace Safe.ViewModels
         public void OnNavigatedFrom(NavigationContext navigationContext)
         {
         }
+
+        public void Add(Domain.ItemViewModel item)
+        {
+            if (item is null)
+            {
+                throw new ArgumentNullException(nameof(item));
+            }
+
+            _allItems.Add(item);
+
+            _container.Items.Add(item.Model);
+
+            Items.Add(item);
+        }
+
+        public void Delete(Domain.ItemViewModel item)
+        {
+            if (item is null)
+            {
+                throw new ArgumentNullException(nameof(item));
+            }
+
+            _allItems.Remove(item);
+
+            _container.Items.Remove(item.Model);
+
+            Items.Remove(item);
+        }
+
+        public bool CanMoveUp(Domain.ItemViewModel item) => false;
+
+        public bool CanMoveDown(Domain.ItemViewModel item) => false;
+
+        public void MoveUp(Domain.ItemViewModel item) { }
+
+        public void MoveDown(Domain.ItemViewModel item) { }
 
         public DelegateCommand CreateNewItemCommand { get; }
     }

@@ -1,5 +1,9 @@
 ﻿using AutoMapper;
 using Safe.Core.Domain;
+using Safe.ViewModels;
+using Safe.ViewModels.Domain;
+using System;
+using System.Linq;
 using System.Text;
 
 namespace Safe.Services
@@ -25,6 +29,30 @@ namespace Safe.Services
                             .ForMember(s => s.Salt, act => {
                                 act.MapFrom(c => Encoding.ASCII.GetString(c.Salt));
                             });
+
+                        cfg.CreateMap<Item, ViewModels.Domain.ItemViewModel>()
+                            .ForMember(vm => vm.Tags, act => {
+                                act.MapFrom(i => string.Join(", ", i.Tags));
+                            });
+                        cfg.CreateMap<ViewModels.Domain.ItemViewModel, Item>()
+                            .ForMember(i => i.Tags, act => {
+                                act.MapFrom((vm, i) =>
+                                {
+                                    if (string.IsNullOrWhiteSpace(vm.Tags)) return new string[0];
+
+                                    return vm.Tags.Split(',', StringSplitOptions.RemoveEmptyEntries)
+                                        .Where(t => !string.IsNullOrWhiteSpace(t))
+                                        .Select(t => t.Trim())
+                                        .ToArray();
+                                });
+                            });
+
+                        cfg.CreateMap<SingleLineTextField, SingleLineTextFieldViewModel>();
+                        cfg.CreateMap<SingleLineTextFieldViewModel, SingleLineTextField>();
+                        cfg.CreateMap<MultiLineTextField, MultiLineTextFieldViewModel>();
+                        cfg.CreateMap<MultiLineTextFieldViewModel, MultiLineTextField>();
+                        cfg.CreateMap<PasswordField, PasswordFieldViewModel>();
+                        cfg.CreateMap<PasswordFieldViewModel, PasswordField>();
                     }
                 );
             _mapper = new AutoMapper.Mapper(config);
