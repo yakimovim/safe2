@@ -1,8 +1,8 @@
-﻿using Microsoft.VisualBasic.FileIO;
-using Prism.Commands;
+﻿using Prism.Commands;
 using Prism.Regions;
 using Safe.Core.Domain;
 using Safe.Services;
+using System;
 
 namespace Safe.ViewModels.Domain
 {
@@ -57,7 +57,24 @@ namespace Safe.ViewModels.Domain
             set { SetProperty(ref _label, value); }
         }
 
-
+        internal static FieldViewModel Create(
+            Field f, 
+            IContainer<FieldViewModel> container, 
+            IMapper mapper, 
+            INavigationService navigationService)
+        {
+            switch(f.Type)
+            {
+                case FieldTypes.SingleLineText:
+                    return new SingleLineTextFieldViewModel((SingleLineTextField)f, container, mapper, navigationService);
+                case FieldTypes.MultiLineText:
+                    return new MultiLineTextFieldViewModel((MultiLineTextField)f, container, mapper, navigationService);
+                case FieldTypes.Password:
+                    return new PasswordFieldViewModel((PasswordField)f, container, mapper, navigationService);
+                default:
+                    throw new ArgumentException();
+            }
+        }
     }
 
     public sealed class SingleLineTextFieldViewModel : FieldViewModel

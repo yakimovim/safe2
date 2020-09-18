@@ -16,9 +16,12 @@ namespace Safe.Services
     public sealed class Mapper : IMapper
     {
         private readonly AutoMapper.Mapper _mapper;
+        private readonly INavigationService _navigationService;
 
-        public Mapper()
+        public Mapper(INavigationService navigationService)
         {
+            _navigationService = navigationService ?? throw new ArgumentNullException(nameof(navigationService));
+
             var config = new MapperConfiguration(cfg =>
                     {
                         cfg.CreateMap<Settings, Configuration>()
@@ -34,7 +37,14 @@ namespace Safe.Services
                             .ForMember(vm => vm.Tags, act => {
                                 act.MapFrom(i => string.Join(", ", i.Tags));
                             })
-                            .ForMember(vm => vm.Fields, act => act.Ignore());
+                            .ForMember(vm => vm.Fields, act => {
+                                act.MapFrom((i, vm) =>
+                                {
+                                    return i.Fields
+                                        .Select(f => FieldViewModel.Create(f, vm, this, _navigationService))
+                                        .ToArray();
+                                });
+                            });
                         cfg.CreateMap<ItemViewModel, Item>()
                             .ForMember(i => i.Tags, act => {
                                 act.MapFrom((vm, i) =>
@@ -47,7 +57,12 @@ namespace Safe.Services
                                         .ToArray();
                                 });
                             })
-                            .ForMember(i => i.Fields, act => act.Ignore());
+                            .ForMember(i => i.Fields, act => {
+                                act.MapFrom((vm, i) =>
+                                {
+                                    return vm.Fields.Select(f => f.Model).ToArray();
+                                });
+                            });
 
                         cfg.CreateMap<SingleLineTextField, SingleLineTextFieldViewModel>();
                         cfg.CreateMap<SingleLineTextFieldViewModel, SingleLineTextField>();

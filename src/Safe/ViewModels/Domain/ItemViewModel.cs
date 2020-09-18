@@ -51,6 +51,26 @@ namespace Safe.ViewModels.Domain
             EditCommand = new DelegateCommand(OnEdit);
         }
 
+        public override void FillModel()
+        {
+            base.FillModel();
+
+            foreach (var field in Fields)
+            {
+                field.FillModel();
+            }
+        }
+
+        public override void RefreshFromModel()
+        {
+            base.RefreshFromModel();
+
+            foreach (var field in Fields)
+            {
+                field.RefreshFromModel();
+            }
+        }
+
         private void OnDelete()
         {
             _navigationService.ShowYesNoDialog("Do you want to delete this item?", res => { 

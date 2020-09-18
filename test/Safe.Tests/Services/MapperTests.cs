@@ -11,9 +11,14 @@ namespace Safe.Tests.Services
     public class MapperTests
     {
         private readonly string _salt = "0C9F222E-426A-409C-9026-5D15E49A5E0B";
-        private readonly Mapper _mapper = new Mapper();
         private readonly INavigationService _navigationService
             = new Mock<INavigationService>().Object;
+        private readonly Mapper _mapper;
+
+        public MapperTests()
+        {
+            _mapper = new Mapper(_navigationService);
+        }
 
         [Theory]
         [AutoData]
@@ -83,7 +88,7 @@ namespace Safe.Tests.Services
 
             // Act
 
-            _mapper.Map(field, viewModel);
+            viewModel.RefreshFromModel();
 
             // Assert
 
@@ -107,7 +112,7 @@ namespace Safe.Tests.Services
 
             // Act
 
-            _mapper.Map(viewModel, field);
+            viewModel.FillModel();
 
             // Assert
 
@@ -131,7 +136,7 @@ namespace Safe.Tests.Services
 
             // Act
 
-            _mapper.Map(field, viewModel);
+            viewModel.RefreshFromModel();
 
             // Assert
 
@@ -155,7 +160,7 @@ namespace Safe.Tests.Services
 
             // Act
 
-            _mapper.Map(viewModel, field);
+            viewModel.FillModel();
 
             // Assert
 
@@ -179,7 +184,7 @@ namespace Safe.Tests.Services
 
             // Act
 
-            _mapper.Map(field, viewModel);
+            viewModel.RefreshFromModel();
 
             // Assert
 
@@ -203,12 +208,86 @@ namespace Safe.Tests.Services
 
             // Act
 
-            _mapper.Map(viewModel, field);
+            viewModel.FillModel();
 
             // Assert
 
             Assert.Equal(label, field.Label);
             Assert.Equal(text, field.Text);
+        }
+
+        [Theory]
+        [AutoData]
+        public void From_item_to_view_model(string title, string description, string label)
+        {
+            // Arrange
+
+            var item = new Item
+            {
+                Title = title,
+                Description = description,
+                Tags = { "1", "2", "3" },
+                Fields = {
+                    new SingleLineTextField
+                    {
+                        Label = label
+                    }
+                }
+            };
+
+            var viewModel = new ItemViewModel(item, null, _mapper, _navigationService);
+
+            // Act
+
+            viewModel.RefreshFromModel();
+
+            // Assert
+
+            Assert.Equal(title, viewModel.Title);
+            Assert.Equal(description, viewModel.Description);
+            Assert.Equal("1, 2, 3", viewModel.Tags);
+
+            var field = Assert.Single(viewModel.Fields);
+            Assert.Equal(FieldTypes.SingleLineText, field.Type);
+            Assert.Equal(label, field.Label);
+        }
+
+        [Theory]
+        [AutoData]
+        public void From_view_model_to_item(string title, string description, string label)
+        {
+            // Arrange
+
+            var item = new Item();
+
+            var viewModel = new ItemViewModel(item, null, _mapper, _navigationService)
+            {
+                Title = title,
+                Description = description,
+                Tags = "1, 2, 3",
+                Fields =
+                {
+                    new SingleLineTextFieldViewModel(new SingleLineTextField(), null, _mapper, _navigationService)
+                    {
+                        Label = label
+                    }
+                }
+            };
+
+            // Act
+
+            viewModel.FillModel();
+
+            // Assert
+
+            Assert.Equal(title, item.Title);
+            Assert.Equal(description, item.Description);
+            Assert.Equal(new[] { "1", "2", "3" }, item.Tags);
+
+            var field = Assert.Single(item.Fields);
+
+            Assert.Equal(FieldTypes.SingleLineText, field.Type);
+            Assert.Equal(label, field.Label);
         }
     }
 }

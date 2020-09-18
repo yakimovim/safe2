@@ -5,21 +5,22 @@ using Prism.Regions;
 using Safe.Core.Domain;
 using Safe.Core.Services;
 using Safe.Services;
+using Safe.ViewModels.Domain;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows;
 
 namespace Safe.ViewModels
 {
-    public class ItemsViewModel : BindableBase, INavigationAware, IContainer<Domain.ItemViewModel>
+    public class ItemsViewModel : BindableBase, IContainer<ItemViewModel>
     {
         private readonly IStorage _storage;
         private readonly INavigationService _navigationService;
-        private readonly IEventAggregator _eventAggregator;
         private readonly IMapper _mapper;
         private readonly Container _container;
-        private readonly List<Domain.ItemViewModel> _allItems;
+        private readonly List<ItemViewModel> _allItems;
 
         private string _searchText;
 
@@ -29,25 +30,25 @@ namespace Safe.ViewModels
             set { SetProperty(ref _searchText, value); }
         }
 
-        public ObservableCollection<Domain.ItemViewModel> Items { get; } 
-            = new ObservableCollection<Domain.ItemViewModel>();
+        public ObservableCollection<ItemViewModel> Items { get; } 
+            = new ObservableCollection<ItemViewModel>();
 
         public ItemsViewModel(
             IStorage storage,
-            INavigationService navigationService,
-            IEventAggregator eventAggregator,
-            IMapper mapper
+            IMapper mapper,
+            INavigationService navigationService
             )
         {
             _storage = storage ?? throw new ArgumentNullException(nameof(storage));
             _navigationService = navigationService ?? throw new ArgumentNullException(nameof(navigationService));
-            _eventAggregator = eventAggregator ?? throw new ArgumentNullException(nameof(eventAggregator));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
 
             _container = _storage.Read();
 
+            Application.Current.Exit += OnApplicationExit;
+
             _allItems = _container.Items
-                .Select(i => new Domain.ItemViewModel(i, this, _mapper, _navigationService))
+                .Select(i => new ItemViewModel(i, this, _mapper, _navigationService))
                 .ToList();
 
             Items.AddRange(_allItems);
@@ -55,26 +56,21 @@ namespace Safe.ViewModels
             CreateNewItemCommand = new DelegateCommand(CreateNewItem);
         }
 
+        private void OnApplicationExit(object sender, ExitEventArgs e)
+        {
+            _storage.Save(_container);
+        }
+
         private void CreateNewItem()
         {
             var p = new NavigationParameters();
-            p.Add("Item", new Domain.ItemViewModel(new Item(), this, _mapper, _navigationService));
+            p.Add("Item", new ItemViewModel(new Item(), this, _mapper, _navigationService));
             p.Add("IsEditing", false);
 
             _navigationService.NavigateMainContentTo("EditItemView", p);
         }
 
-        public void OnNavigatedTo(NavigationContext navigationContext)
-        {
-        }
-
-        public bool IsNavigationTarget(NavigationContext navigationContext) => true;
-
-        public void OnNavigatedFrom(NavigationContext navigationContext)
-        {
-        }
-
-        public void Add(Domain.ItemViewModel item)
+        public void Add(ItemViewModel item)
         {
             if (item is null)
             {
@@ -88,7 +84,7 @@ namespace Safe.ViewModels
             Items.Add(item);
         }
 
-        public void Delete(Domain.ItemViewModel item)
+        public void Delete(ItemViewModel item)
         {
             if (item is null)
             {
@@ -102,13 +98,13 @@ namespace Safe.ViewModels
             Items.Remove(item);
         }
 
-        public bool CanMoveUp(Domain.ItemViewModel item) => false;
+        public bool CanMoveUp(ItemViewModel item) => false;
 
-        public bool CanMoveDown(Domain.ItemViewModel item) => false;
+        public bool CanMoveDown(ItemViewModel item) => false;
 
-        public void MoveUp(Domain.ItemViewModel item) { }
+        public void MoveUp(ItemViewModel item) { }
 
-        public void MoveDown(Domain.ItemViewModel item) { }
+        public void MoveDown(ItemViewModel item) { }
 
         public DelegateCommand CreateNewItemCommand { get; }
     }

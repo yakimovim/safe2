@@ -27,12 +27,12 @@ namespace Safe.ViewModels
             RefreshFromModel();
         }
 
-        public void RefreshFromModel()
+        public virtual void RefreshFromModel()
         {
             _mapper.Map(Model, this);
         }
 
-        public void FillModel()
+        public virtual void FillModel()
         {
             _mapper.Map(this, Model);
         }
