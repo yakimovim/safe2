@@ -24,7 +24,7 @@ namespace Safe.ViewModels.Domain
         }
 
         private string _tags;
-        private readonly IRegionManager _regionManager;
+        private readonly INavigationService _navigationService;
 
         public string Tags
         {
@@ -42,10 +42,10 @@ namespace Safe.ViewModels.Domain
             Item model, 
             IContainer<ItemViewModel> parentContainer, 
             IMapper mapper,
-            IRegionManager regionManager) 
+            INavigationService navigationService)
             : base(model, parentContainer, mapper)
         {
-            _regionManager = regionManager ?? throw new ArgumentNullException(nameof(regionManager));
+            _navigationService = navigationService ?? throw new ArgumentNullException(nameof(navigationService));
 
             DeleteCommand = new DelegateCommand(OnDelete);
             EditCommand = new DelegateCommand(OnEdit);
@@ -53,7 +53,12 @@ namespace Safe.ViewModels.Domain
 
         private void OnDelete()
         {
-            Delete();
+            _navigationService.ShowYesNoDialog("Do you want to delete this item?", res => { 
+                if(res.Result == Prism.Services.Dialogs.ButtonResult.Yes)
+                {
+                    Delete();
+                }
+            });
         }
 
         private void OnEdit()
@@ -62,7 +67,7 @@ namespace Safe.ViewModels.Domain
             p.Add("Item", this);
             p.Add("IsEditing", true);
 
-            _regionManager.RequestNavigate("ContentRegion", "EditItemView", p);
+            _navigationService.NavigateMainContentTo("EditItemView", p);
         }
 
         public void Add(FieldViewModel item)

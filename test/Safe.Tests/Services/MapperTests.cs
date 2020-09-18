@@ -1,4 +1,5 @@
 ﻿using AutoFixture.Xunit2;
+using Moq;
 using Safe.Core.Domain;
 using Safe.Services;
 using Safe.ViewModels.Domain;
@@ -11,6 +12,8 @@ namespace Safe.Tests.Services
     {
         private readonly string _salt = "0C9F222E-426A-409C-9026-5D15E49A5E0B";
         private readonly Mapper _mapper = new Mapper();
+        private readonly INavigationService _navigationService
+            = new Mock<INavigationService>().Object;
 
         [Theory]
         [AutoData]
@@ -76,7 +79,7 @@ namespace Safe.Tests.Services
                 Text = text
             };
 
-            var viewModel = new SingleLineTextFieldViewModel(field, null, _mapper);
+            var viewModel = new SingleLineTextFieldViewModel(field, null, _mapper, _navigationService);
 
             // Act
 
@@ -96,7 +99,7 @@ namespace Safe.Tests.Services
 
             var field = new SingleLineTextField();
 
-            var viewModel = new SingleLineTextFieldViewModel(field, null, _mapper)
+            var viewModel = new SingleLineTextFieldViewModel(field, null, _mapper, _navigationService)
             {
                 Label = label,
                 Text = text
@@ -124,7 +127,7 @@ namespace Safe.Tests.Services
                 Text = text
             };
 
-            var viewModel = new MultiLineTextFieldViewModel(field, null, _mapper);
+            var viewModel = new MultiLineTextFieldViewModel(field, null, _mapper, _navigationService);
 
             // Act
 
@@ -144,7 +147,7 @@ namespace Safe.Tests.Services
 
             var field = new MultiLineTextField();
 
-            var viewModel = new MultiLineTextFieldViewModel(field, null, _mapper)
+            var viewModel = new MultiLineTextFieldViewModel(field, null, _mapper, _navigationService)
             {
                 Label = label,
                 Text = text
@@ -172,7 +175,7 @@ namespace Safe.Tests.Services
                 Text = text
             };
 
-            var viewModel = new PasswordFieldViewModel(field, null, _mapper);
+            var viewModel = new PasswordFieldViewModel(field, null, _mapper, _navigationService);
 
             // Act
 
@@ -192,7 +195,7 @@ namespace Safe.Tests.Services
 
             var field = new PasswordField();
 
-            var viewModel = new PasswordFieldViewModel(field, null, _mapper)
+            var viewModel = new PasswordFieldViewModel(field, null, _mapper, _navigationService)
             {
                 Label = label,
                 Text = text

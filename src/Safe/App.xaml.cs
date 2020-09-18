@@ -24,14 +24,15 @@ namespace Safe
             containerRegistry.RegisterSingleton<IStorageStreamProvider, StorageStreamProvider>();
             containerRegistry.RegisterSingleton<IEncryptionService, EncryptionService>();
             containerRegistry.RegisterSingleton<IStorage, Storage>();
+            containerRegistry.RegisterSingleton<INavigationService, NavigationService>();
 
             containerRegistry.RegisterForNavigation<LoginView>();
             containerRegistry.RegisterForNavigation<CreateStorageView>();
             containerRegistry.RegisterForNavigation<ItemsView>();
-            containerRegistry.RegisterForNavigation<CreateNewItemView>();
             containerRegistry.RegisterForNavigation<EditItemView>();
+            containerRegistry.RegisterForNavigation<EditFieldView>();
 
-            containerRegistry.RegisterDialog<AddFieldsDialog, AddFieldsDialogViewModel>();
+            containerRegistry.RegisterDialog<YesNoDialog, YesNoDialogViewModel>();
         }
     }
 }

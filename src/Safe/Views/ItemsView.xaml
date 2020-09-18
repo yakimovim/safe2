@@ -3,7 +3,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Safe.Views"
              xmlns:prism="http://prismlibrary.com/"
              prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d" 
@@ -22,6 +21,15 @@
                                 <TextBlock Text="{Binding Title}" FontSize="20" />
                                 <TextBlock Text="{Binding Description}" FontSize="14" />
                                 <TextBlock Text="{Binding Tags}" FontSize="14" FontWeight="Bold" />
+                                <ItemsControl ItemsSource="{Binding Fields}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Vertical">
+                                                <TextBlock Text="{Binding Label}" FontSize="16" />
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
                                 <StackPanel Orientation="Horizontal">
                                     <Button Content="Edit" FontSize="16" Width="100"
                                             Command="{Binding EditCommand}" />

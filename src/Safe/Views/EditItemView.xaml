@@ -29,8 +29,10 @@
                                 <TextBlock Text="{Binding Type}" FontSize="24" Margin="5" />
                                 <TextBlock Text="Label:" FontSize="24" Margin="5" />
                                 <TextBlock Text="{Binding Label}" FontSize="24" Margin="5" />
-                                <Button Content="Delete" Command="{Binding DeleteFieldCommand}"
-                                    CommandParameter="{Binding}"/>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Content="Edit" Command="{Binding EditCommand}" />
+                                    <Button Content="Delete" Command="{Binding DeleteCommand}" />
+                                </StackPanel>
                             </StackPanel>
                         </Border>
                     </DataTemplate>

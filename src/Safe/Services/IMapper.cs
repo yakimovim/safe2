@@ -30,11 +30,12 @@ namespace Safe.Services
                                 act.MapFrom(c => Encoding.ASCII.GetString(c.Salt));
                             });
 
-                        cfg.CreateMap<Item, ViewModels.Domain.ItemViewModel>()
+                        cfg.CreateMap<Item, ItemViewModel>()
                             .ForMember(vm => vm.Tags, act => {
                                 act.MapFrom(i => string.Join(", ", i.Tags));
-                            });
-                        cfg.CreateMap<ViewModels.Domain.ItemViewModel, Item>()
+                            })
+                            .ForMember(vm => vm.Fields, act => act.Ignore());
+                        cfg.CreateMap<ItemViewModel, Item>()
                             .ForMember(i => i.Tags, act => {
                                 act.MapFrom((vm, i) =>
                                 {
@@ -45,7 +46,8 @@ namespace Safe.Services
                                         .Select(t => t.Trim())
                                         .ToArray();
                                 });
-                            });
+                            })
+                            .ForMember(i => i.Fields, act => act.Ignore());
 
                         cfg.CreateMap<SingleLineTextField, SingleLineTextFieldViewModel>();
                         cfg.CreateMap<SingleLineTextFieldViewModel, SingleLineTextField>();

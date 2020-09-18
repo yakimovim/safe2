@@ -15,7 +15,7 @@ namespace Safe.ViewModels
     public class ItemsViewModel : BindableBase, INavigationAware, IContainer<Domain.ItemViewModel>
     {
         private readonly IStorage _storage;
-        private readonly IRegionManager _regionManager;
+        private readonly INavigationService _navigationService;
         private readonly IEventAggregator _eventAggregator;
         private readonly IMapper _mapper;
         private readonly Container _container;
@@ -34,20 +34,20 @@ namespace Safe.ViewModels
 
         public ItemsViewModel(
             IStorage storage,
-            IRegionManager regionManager,
+            INavigationService navigationService,
             IEventAggregator eventAggregator,
             IMapper mapper
             )
         {
             _storage = storage ?? throw new ArgumentNullException(nameof(storage));
-            _regionManager = regionManager ?? throw new ArgumentNullException(nameof(regionManager));
+            _navigationService = navigationService ?? throw new ArgumentNullException(nameof(navigationService));
             _eventAggregator = eventAggregator ?? throw new ArgumentNullException(nameof(eventAggregator));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
 
             _container = _storage.Read();
 
             _allItems = _container.Items
-                .Select(i => new Domain.ItemViewModel(i, this, _mapper, _regionManager))
+                .Select(i => new Domain.ItemViewModel(i, this, _mapper, _navigationService))
                 .ToList();
 
             Items.AddRange(_allItems);
@@ -58,10 +58,10 @@ namespace Safe.ViewModels
         private void CreateNewItem()
         {
             var p = new NavigationParameters();
-            p.Add("Item", new Domain.ItemViewModel(new Item(), this, _mapper, _regionManager));
+            p.Add("Item", new Domain.ItemViewModel(new Item(), this, _mapper, _navigationService));
             p.Add("IsEditing", false);
 
-            _regionManager.RequestNavigate("ContentRegion", "EditItemView", p);
+            _navigationService.NavigateMainContentTo("EditItemView", p);
         }
 
         public void OnNavigatedTo(NavigationContext navigationContext)

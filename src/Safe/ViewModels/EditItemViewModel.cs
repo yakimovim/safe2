@@ -1,19 +1,20 @@
 ﻿using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
+using Safe.Services;
 using System;
 
 namespace Safe.ViewModels
 {
     public class EditItemViewModel : BindableBase, INavigationAware
     {
-        private readonly IRegionManager _regionManager;
-
-        private string _returnUrl;
+        private IRegionNavigationJournal _journal;
 
         public bool IsEditing { get; private set; }
 
         private Domain.ItemViewModel itemViewModel;
+        private readonly INavigationService _navigationService;
+
         public Domain.ItemViewModel Item
         {
             get { return itemViewModel; }
@@ -24,14 +25,15 @@ namespace Safe.ViewModels
 
         public DelegateCommand CancelCommand { get; }
 
-        public EditItemViewModel(
-            IRegionManager regionManager
-            )
+        public DelegateCommand AddFieldCommand { get; }
+
+        public EditItemViewModel(INavigationService navigationService)
         {
-            _regionManager = regionManager ?? throw new ArgumentNullException(nameof(regionManager));
+            _navigationService = navigationService ?? throw new ArgumentNullException(nameof(navigationService));
 
             OkCommand = new DelegateCommand(Save);
             CancelCommand = new DelegateCommand(Cancel);
+            AddFieldCommand = new DelegateCommand(AddField);
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext) => true;
@@ -42,6 +44,11 @@ namespace Safe.ViewModels
 
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
+            _journal = navigationContext.NavigationService.Journal;
+
+            // If this is just a back navigation do not change Item and IsEditing
+            if (!navigationContext.Parameters.ContainsKey("Item")) return;
+
             Item = navigationContext.Parameters.GetValue<Domain.ItemViewModel>("Item");
 
             if (Item == null) throw new InvalidOperationException();
@@ -49,17 +56,13 @@ namespace Safe.ViewModels
             IsEditing = navigationContext.Parameters.ContainsKey("IsEditing")
                 ? navigationContext.Parameters.GetValue<bool>("IsEditing")
                 : false;
-
-            _returnUrl = navigationContext.Parameters.ContainsKey("ReturnUrl")
-                ? navigationContext.Parameters.GetValue<string>("ReturnUrl")
-                : "ItemsView";
         }
 
         private void Cancel()
         {
             Item.RefreshFromModel();
 
-            _regionManager.RequestNavigate("ContentRegion", _returnUrl);
+            _journal.GoBack();
         }
 
         private void Save()
@@ -71,8 +74,16 @@ namespace Safe.ViewModels
                 Item.Add();
             }
 
-            _regionManager.RequestNavigate("ContentRegion", _returnUrl);
+            _journal.GoBack();
         }
 
+        private void AddField()
+        {
+            var p = new NavigationParameters();
+            p.Add("IsEditing", false);
+            p.Add("Container", Item);
+
+            _navigationService.NavigateMainContentTo("EditFieldView", p);
+        }
     }
 }

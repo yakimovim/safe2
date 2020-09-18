@@ -14,11 +14,11 @@ using System.Windows.Shapes;
 namespace Safe.Dialogs
 {
     /// <summary>
-    /// Interaction logic for AddFieldsDialog.xaml
+    /// Interaction logic for YesNoDialog.xaml
     /// </summary>
-    public partial class AddFieldsDialog : UserControl
+    public partial class YesNoDialog : UserControl
     {
-        public AddFieldsDialog()
+        public YesNoDialog()
         {
             InitializeComponent();
         }
