@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:util="clr-namespace:Safe.Utilities"
+             xmlns:vmd="clr-namespace:Safe.ViewModels.Domain"
              xmlns:prism="http://prismlibrary.com/"
              prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d" 
@@ -27,13 +28,26 @@
                                     Converter={StaticResource visibilityConverter}}" />
                                 <TextBlock Text="{Binding Tags}" FontSize="14" FontWeight="Bold" />
                                 <ItemsControl ItemsSource="{Binding Fields}">
-                                    <ItemsControl.ItemTemplate>
-                                        <DataTemplate>
-                                            <StackPanel Orientation="Vertical">
-                                                <TextBlock Text="{Binding Label}" FontSize="16" />
-                                            </StackPanel>
+                                    <ItemsControl.Resources>
+                                        <DataTemplate DataType="{x:Type vmd:SingleLineTextFieldViewModel}">
+                                            <DockPanel HorizontalAlignment="Stretch" LastChildFill="True">
+                                                <TextBlock Text="{Binding Label}" FontSize="16" DockPanel.Dock="Left" />
+                                                <TextBox Text="{Binding Text}" FontSize="16" />
+                                            </DockPanel>
                                         </DataTemplate>
-                                    </ItemsControl.ItemTemplate>
+                                        <DataTemplate DataType="{x:Type vmd:MultiLineTextFieldViewModel}">
+                                            <DockPanel HorizontalAlignment="Stretch" LastChildFill="True">
+                                                <TextBlock Text="{Binding Label}" FontSize="16" DockPanel.Dock="Left" />
+                                                <TextBox Text="{Binding Text}" FontSize="16" />
+                                            </DockPanel>
+                                        </DataTemplate>
+                                        <DataTemplate DataType="{x:Type vmd:PasswordFieldViewModel}">
+                                            <DockPanel HorizontalAlignment="Stretch" LastChildFill="True">
+                                                <TextBlock Text="{Binding Label}" FontSize="16" DockPanel.Dock="Left" />
+                                                <TextBox Text="{Binding Text}" FontSize="16" />
+                                            </DockPanel>
+                                        </DataTemplate>
+                                    </ItemsControl.Resources>
                                 </ItemsControl>
                                 <StackPanel Orientation="Horizontal">
                                     <Button Content="Edit" FontSize="16" Width="100"

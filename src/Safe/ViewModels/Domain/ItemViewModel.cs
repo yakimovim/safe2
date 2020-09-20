@@ -33,7 +33,7 @@ namespace Safe.ViewModels.Domain
         public bool HasDescription
         {
             get { return _hasDescription; }
-            set { SetProperty(ref _hasDescription, value); }
+            private set { SetProperty(ref _hasDescription, value); }
         }
 
         private string _tags;
