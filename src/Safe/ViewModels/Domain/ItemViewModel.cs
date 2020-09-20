@@ -20,7 +20,20 @@ namespace Safe.ViewModels.Domain
         public string Description
         {
             get { return _description; }
-            set { SetProperty(ref _description, value); }
+            set 
+            { 
+                if(SetProperty(ref _description, value))
+                {
+                    HasDescription = !string.IsNullOrWhiteSpace(_description);
+                }
+            }
+        }
+
+        private bool _hasDescription;
+        public bool HasDescription
+        {
+            get { return _hasDescription; }
+            set { SetProperty(ref _hasDescription, value); }
         }
 
         private string _tags;
@@ -98,8 +111,6 @@ namespace Safe.ViewModels.Domain
             }
 
             Fields.Add(item);
-
-            Model.Fields.Add(item.Model);
         }
 
         public void Delete(FieldViewModel item)
@@ -110,8 +121,6 @@ namespace Safe.ViewModels.Domain
             }
 
             Fields.Remove(item);
-
-            Model.Fields.Remove(item.Model);
         }
 
         public void MoveUp(FieldViewModel item)
@@ -130,10 +139,6 @@ namespace Safe.ViewModels.Domain
             Fields.RemoveAt(index);
 
             Fields.Insert(index - 1, item);
-
-            Model.Fields.RemoveAt(index);
-
-            Model.Fields.Insert(index - 1, item.Model);
         }
 
         public void MoveDown(FieldViewModel item)
@@ -152,10 +157,6 @@ namespace Safe.ViewModels.Domain
             Fields.RemoveAt(index);
 
             Fields.Insert(index + 1, item);
-
-            Model.Fields.RemoveAt(index);
-
-            Model.Fields.Insert(index + 1, item.Model);
         }
 
         bool IContainer<FieldViewModel>.CanMoveUp(FieldViewModel item)

@@ -15,13 +15,11 @@ namespace Safe.ViewModels
 
         private FieldViewModel Item { get; set; }
 
-        private bool IsEditing { get; set; }
-
-        private Visibility _isCreating;
-        public Visibility IsCreating
+        private bool _isEditing;
+        public bool IsEditing
         {
-            get { return _isCreating; }
-            set { SetProperty(ref _isCreating, value); }
+            get { return _isEditing; }
+            set { SetProperty(ref _isEditing, value); }
         }
 
         private int _type;
@@ -125,10 +123,6 @@ namespace Safe.ViewModels
             IsEditing = navigationContext.Parameters.ContainsKey("IsEditing")
                 ? navigationContext.Parameters.GetValue<bool>("IsEditing")
                 : false;
-
-            IsCreating = IsEditing
-                ? Visibility.Collapsed
-                : Visibility.Visible;
         }
     }
 }
