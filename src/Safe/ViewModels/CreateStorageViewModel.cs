@@ -1,33 +1,33 @@
 ﻿using Prism.Commands;
 using Prism.Mvvm;
-using Prism.Regions;
 using Safe.Core.Domain;
 using Safe.Core.Services;
+using Safe.Services;
 using System;
 
 namespace Safe.ViewModels
 {
     public class CreateStorageViewModel : BindableBase
     {
-        private string _password;
         private readonly IStorage _storage;
-        private readonly IRegionManager _regionManager;
+        private readonly INavigationService _navigationService;
 
-        public void SetPassword(string password)
+        private string _password;
+        public string Password
         {
-            _password = password;
-
-            CreateStorageCommand.RaiseCanExecuteChanged();
+            get { return _password; }
+            set { SetProperty(ref _password, value); }
         }
 
         public CreateStorageViewModel(
             IStorage storage,
-            IRegionManager regionManager)
+            INavigationService navigationService)
         {
             _storage = storage ?? throw new ArgumentNullException(nameof(storage));
-            _regionManager = regionManager ?? throw new ArgumentNullException(nameof(regionManager));
+            _navigationService = navigationService ?? throw new ArgumentNullException(nameof(navigationService));
             
-            CreateStorageCommand = new DelegateCommand(CreateStorage, CanCreateStorage);
+            CreateStorageCommand = new DelegateCommand(CreateStorage, CanCreateStorage)
+                .ObservesProperty(() => Password);
         }
 
         private bool CanCreateStorage() => !string.IsNullOrEmpty(_password);
@@ -40,7 +40,7 @@ namespace Safe.ViewModels
 
             _storage.Login(password);
 
-            _regionManager.RequestNavigate("ContentRegion", "ItemsView");
+            _navigationService.NavigateMainContentTo("ItemsView");
         }
 
         public DelegateCommand CreateStorageCommand { get; }

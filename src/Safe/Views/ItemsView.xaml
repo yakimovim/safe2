@@ -30,22 +30,33 @@
                                 <ItemsControl ItemsSource="{Binding Fields}">
                                     <ItemsControl.Resources>
                                         <DataTemplate DataType="{x:Type vmd:SingleLineTextFieldViewModel}">
-                                            <DockPanel HorizontalAlignment="Stretch" LastChildFill="True">
+                                            <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch">
                                                 <TextBlock Text="{Binding Label}" FontSize="16" DockPanel.Dock="Left" />
-                                                <TextBox Text="{Binding Text}" FontSize="16" />
-                                            </DockPanel>
+                                                <DockPanel HorizontalAlignment="Stretch" LastChildFill="True">
+                                                    <Button Content="Copy" Command="{Binding CopyCommand}" DockPanel.Dock="Left" />
+                                                    <TextBox Text="{Binding Text}" FontSize="16" />
+                                                </DockPanel>
+                                            </StackPanel>
                                         </DataTemplate>
                                         <DataTemplate DataType="{x:Type vmd:MultiLineTextFieldViewModel}">
-                                            <DockPanel HorizontalAlignment="Stretch" LastChildFill="True">
+                                            <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch">
                                                 <TextBlock Text="{Binding Label}" FontSize="16" DockPanel.Dock="Left" />
-                                                <TextBox Text="{Binding Text}" FontSize="16" />
-                                            </DockPanel>
+                                                <DockPanel HorizontalAlignment="Stretch" LastChildFill="True">
+                                                    <Button Content="Copy" Command="{Binding CopyCommand}" DockPanel.Dock="Left" />
+                                                    <TextBox Text="{Binding Text}" FontSize="16" />
+                                                </DockPanel>
+                                            </StackPanel>
                                         </DataTemplate>
                                         <DataTemplate DataType="{x:Type vmd:PasswordFieldViewModel}">
-                                            <DockPanel HorizontalAlignment="Stretch" LastChildFill="True">
+                                            <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch">
                                                 <TextBlock Text="{Binding Label}" FontSize="16" DockPanel.Dock="Left" />
-                                                <TextBox Text="{Binding Text}" FontSize="16" />
-                                            </DockPanel>
+                                                <DockPanel HorizontalAlignment="Stretch" LastChildFill="True">
+                                                    <Button Content="Copy" Command="{Binding CopyCommand}" DockPanel.Dock="Left" />
+                                                    <PasswordBox util:PasswordHelper.Attach="True" 
+                                                             util:PasswordHelper.Password="{Binding Text, Mode=TwoWay}" 
+                                                             FontSize="16" />
+                                                </DockPanel>
+                                            </StackPanel>
                                         </DataTemplate>
                                     </ItemsControl.Resources>
                                 </ItemsControl>

@@ -1,6 +1,4 @@
-﻿using Safe.ViewModels;
-using System.Windows;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 
 namespace Safe.Views
 {
@@ -12,14 +10,6 @@ namespace Safe.Views
         public CreateStorageView()
         {
             InitializeComponent();
-        }
-
-        private void PasswordChanged(object sender, RoutedEventArgs e)
-        {
-            var viewModel = DataContext as CreateStorageViewModel;
-            if (viewModel == null) return;
-
-            viewModel.SetPassword(pwdBox.Password);
         }
     }
 }

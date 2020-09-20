@@ -3,6 +3,7 @@ using Prism.Regions;
 using Safe.Core.Domain;
 using Safe.Services;
 using System;
+using System.Windows;
 
 namespace Safe.ViewModels.Domain
 {
@@ -21,7 +22,7 @@ namespace Safe.ViewModels.Domain
             INavigationService navigationService) 
             : base(model, parentContainer, mapper)
         {
-            _navigationService = navigationService ?? throw new System.ArgumentNullException(nameof(navigationService));
+            _navigationService = navigationService ?? throw new ArgumentNullException(nameof(navigationService));
 
             DeleteCommand = new DelegateCommand(OnDelete);
             EditCommand = new DelegateCommand(OnEdit);
@@ -85,13 +86,30 @@ namespace Safe.ViewModels.Domain
             IMapper mapper,
             INavigationService navigationService) 
             : base(model, parentContainer, mapper, navigationService)
-        { }
+        {
+            CopyCommand = new DelegateCommand(CopyText);
+        }
 
-        private string _text;
+        public DelegateCommand CopyCommand { get; }
+
+        private void CopyText()
+        {
+            Clipboard.SetText(Text ?? string.Empty);
+        }
+
+        private SingleLineTextField Field => (SingleLineTextField) Model;
+
         public string Text
         {
-            get { return _text; }
-            set { SetProperty(ref _text, value); }
+            get { return Field.Text; }
+            set 
+            { 
+                if(Field.Text != value)
+                {
+                    Field.Text = value;
+                    RaisePropertyChanged();
+                }
+            }
         }
     }
 
@@ -103,13 +121,30 @@ namespace Safe.ViewModels.Domain
             IMapper mapper,
             INavigationService navigationService)
             : base(model, parentContainer, mapper, navigationService)
-        { }
+        {
+            CopyCommand = new DelegateCommand(CopyText);
+        }
 
-        private string _text;
+        public DelegateCommand CopyCommand { get; }
+
+        private void CopyText()
+        {
+            Clipboard.SetText(Text ?? string.Empty);
+        }
+
+        private MultiLineTextField Field => (MultiLineTextField)Model;
+
         public string Text
         {
-            get { return _text; }
-            set { SetProperty(ref _text, value); }
+            get { return Field.Text; }
+            set
+            {
+                if (Field.Text != value)
+                {
+                    Field.Text = value;
+                    RaisePropertyChanged();
+                }
+            }
         }
     }
 
@@ -121,13 +156,30 @@ namespace Safe.ViewModels.Domain
             IMapper mapper,
             INavigationService navigationService)
             : base(model, parentContainer, mapper, navigationService)
-        { }
+        {
+            CopyCommand = new DelegateCommand(CopyText);
+        }
 
-        private string _text;
+        public DelegateCommand CopyCommand { get; }
+
+        private void CopyText()
+        {
+            Clipboard.SetText(Text ?? string.Empty);
+        }
+
+        private PasswordField Field => (PasswordField)Model;
+
         public string Text
         {
-            get { return _text; }
-            set { SetProperty(ref _text, value); }
+            get { return Field.Text; }
+            set
+            {
+                if (Field.Text != value)
+                {
+                    Field.Text = value;
+                    RaisePropertyChanged();
+                }
+            }
         }
     }
 }

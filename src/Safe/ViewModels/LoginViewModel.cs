@@ -1,36 +1,32 @@
 ﻿using Prism.Commands;
 using Prism.Mvvm;
-using Prism.Regions;
 using Safe.Core.Domain;
 using Safe.Core.Services;
+using Safe.Services;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Safe.ViewModels
 {
     public class LoginViewModel : BindableBase
     {
-        private string _password;
         private readonly IStorage _storage;
-        private readonly IRegionManager _regionManager;
+        private readonly INavigationService _navigationService;
 
-        public void SetPassword(string password)
+        private string _password;
+        public string Password
         {
-            _password = password;
-
-            LoginCommand.RaiseCanExecuteChanged();
+            get { return _password; }
+            set { SetProperty(ref _password, value); }
         }
+
         public LoginViewModel(
             IStorage storage,
-            IRegionManager regionManager)
+            INavigationService navigationService)
         {
             _storage = storage ?? throw new ArgumentNullException(nameof(storage));
-            _regionManager = regionManager ?? throw new ArgumentNullException(nameof(regionManager));
+            _navigationService = navigationService ?? throw new ArgumentNullException(nameof(navigationService));
 
-            LoginCommand = new DelegateCommand(Login, CanLogin);
+            LoginCommand = new DelegateCommand(Login, CanLogin).ObservesProperty(() => Password);
         }
 
         private bool CanLogin() => !string.IsNullOrEmpty(_password);
@@ -41,11 +37,10 @@ namespace Safe.ViewModels
 
             if (_storage.Login(password))
             {
-                _regionManager.RequestNavigate("ContentRegion", "ItemsView");
+                _navigationService.NavigateMainContentTo("ItemsView");
             }
         }
 
         public DelegateCommand LoginCommand { get; }
-
     }
 }
