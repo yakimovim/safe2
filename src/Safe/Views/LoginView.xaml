@@ -16,6 +16,7 @@
                    />
         <PasswordBox util:PasswordHelper.Attach="True" 
             util:PasswordHelper.Password="{Binding Password, Mode=TwoWay}"
+            util:FocusHelper.IsFocused="True"
             Width="300"
             FontSize="30"
             Margin="10"/>

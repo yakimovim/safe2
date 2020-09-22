@@ -1,5 +1,6 @@
 ﻿using Prism.Commands;
 using Prism.Mvvm;
+using Prism.Regions;
 using Safe.Core.Domain;
 using Safe.Core.Services;
 using Safe.Services;
@@ -7,7 +8,7 @@ using System;
 
 namespace Safe.ViewModels
 {
-    public class LoginViewModel : BindableBase
+    public class LoginViewModel : BindableBase, INavigationAware
     {
         private readonly IStorage _storage;
         private readonly INavigationService _navigationService;
@@ -40,6 +41,20 @@ namespace Safe.ViewModels
                 _navigationService.NavigateMainContentTo("ItemsView");
             }
         }
+
+        public void OnNavigatedTo(NavigationContext navigationContext)
+        {
+            if(_storage.LoggedIn)
+            {
+                _navigationService.NavigateMainContentTo("ItemsView");
+            }
+
+            Password = string.Empty;
+        }
+
+        public bool IsNavigationTarget(NavigationContext navigationContext) => true;
+
+        public void OnNavigatedFrom(NavigationContext navigationContext) { }
 
         public DelegateCommand LoginCommand { get; }
     }

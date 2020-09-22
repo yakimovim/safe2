@@ -1,5 +1,4 @@
 ﻿using Prism.Commands;
-using Prism.Events;
 using Prism.Mvvm;
 using Prism.Regions;
 using Safe.Core.Domain;
@@ -14,13 +13,17 @@ using System.Windows;
 
 namespace Safe.ViewModels
 {
-    public class ItemsViewModel : BindableBase, IContainer<ItemViewModel>
+    public class ItemsViewModel 
+        : BindableBase, INavigationAware, IContainer<ItemViewModel>
     {
         private readonly IStorage _storage;
         private readonly INavigationService _navigationService;
+        private readonly IConfigurationService _configurationService;
         private readonly IMapper _mapper;
-        private readonly Container _container;
-        private readonly List<ItemViewModel> _allItems;
+
+        private string _storagePath;
+        private Container _container;
+        private List<ItemViewModel> _allItems;
 
         private string _searchText;
 
@@ -36,22 +39,16 @@ namespace Safe.ViewModels
         public ItemsViewModel(
             IStorage storage,
             IMapper mapper,
-            INavigationService navigationService
+            INavigationService navigationService,
+            IConfigurationService configurationService
             )
         {
             _storage = storage ?? throw new ArgumentNullException(nameof(storage));
             _navigationService = navigationService ?? throw new ArgumentNullException(nameof(navigationService));
+            _configurationService = configurationService ?? throw new ArgumentNullException(nameof(configurationService));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
 
-            _container = _storage.Read();
-
             Application.Current.Exit += OnApplicationExit;
-
-            _allItems = _container.Items
-                .Select(i => new ItemViewModel(i, this, _mapper, _navigationService))
-                .ToList();
-
-            Items.AddRange(_allItems);
 
             CreateNewItemCommand = new DelegateCommand(CreateNewItem);
         }
@@ -105,6 +102,40 @@ namespace Safe.ViewModels
         public void MoveUp(ItemViewModel item) { }
 
         public void MoveDown(ItemViewModel item) { }
+
+        public void OnNavigatedTo(NavigationContext navigationContext)
+        {
+            if(!_storage.Exists)
+            {
+                _navigationService.NavigateMainContentTo("CreateStorageView");
+                return;
+            }
+
+            if(!_storage.LoggedIn)
+            {
+                _navigationService.NavigateMainContentTo("LoginView");
+                return;
+            }
+
+            var configuration = _configurationService.GetConfiguration();
+
+            if(_storagePath != configuration.StoragePath)
+            {
+                _storagePath = configuration.StoragePath;
+
+                _container = _storage.Read();
+
+                _allItems = _container.Items
+                    .Select(i => new ItemViewModel(i, this, _mapper, _navigationService))
+                    .ToList();
+
+                Items.AddRange(_allItems);
+            }
+        }
+
+        public bool IsNavigationTarget(NavigationContext navigationContext) => true;
+
+        public void OnNavigatedFrom(NavigationContext navigationContext) { }
 
         public DelegateCommand CreateNewItemCommand { get; }
     }

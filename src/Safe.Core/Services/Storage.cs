@@ -14,6 +14,10 @@ namespace Safe.Core.Services
         /// </summary>
         bool Exists { get; }
         /// <summary>
+        /// Checks if the a user is logged into the storage.
+        /// </summary>
+        bool LoggedIn { get; }
+        /// <summary>
         /// Creates new storage.
         /// </summary>
         /// <param name="password">Password.</param>
@@ -66,7 +70,7 @@ namespace Safe.Core.Services
             _encryptionService = encryptionService ?? throw new ArgumentNullException(nameof(encryptionService));
         }
 
-        private bool LoggedIn => _password != null;
+        public bool LoggedIn => _password != null;
 
         public bool Exists => _storageStreamProvider.StorageExists;
 

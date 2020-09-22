@@ -70,6 +70,10 @@ namespace Safe.Services
                         cfg.CreateMap<MultiLineTextFieldViewModel, MultiLineTextField>();
                         cfg.CreateMap<PasswordField, PasswordFieldViewModel>();
                         cfg.CreateMap<PasswordFieldViewModel, PasswordField>();
+
+                        cfg.CreateMap<IConfiguration, SettingsViewModel>();
+                        cfg.CreateMap<IConfiguration, Configuration>();
+                        cfg.CreateMap<SettingsViewModel, Configuration>();
                     }
                 );
             _mapper = new AutoMapper.Mapper(config);

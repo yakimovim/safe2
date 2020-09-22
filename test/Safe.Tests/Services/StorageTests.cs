@@ -49,7 +49,11 @@ namespace Safe.Tests.Services
 
             // Assert
 
+            Assert.False(_storage.LoggedIn);
+
             Assert.True(_storage.Login(_password));
+            
+            Assert.True(_storage.LoggedIn);
         }
 
         [Fact]
@@ -61,7 +65,11 @@ namespace Safe.Tests.Services
 
             // Assert
 
+            Assert.False(_storage.LoggedIn);
+
             Assert.False(_storage.Login(new Password("706CFD1B-505C-4A84-ABB1-E40F7AD79BB9")));
+
+            Assert.False(_storage.LoggedIn);
         }
 
         [Fact]
@@ -74,6 +82,24 @@ namespace Safe.Tests.Services
             // Assert
 
             Assert.Throws<InvalidOperationException>(() => _storage.Logout());
+        }
+
+        [Fact]
+        public void Successful_logout()
+        {
+            // Arrange
+
+            CreateStorage();
+
+            _storage.Login(_password);
+
+            // Assert
+
+            Assert.True(_storage.LoggedIn);
+
+            _storage.Logout();
+
+            Assert.False(_storage.LoggedIn);
         }
 
         [Fact]
