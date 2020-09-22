@@ -7,7 +7,6 @@ using Safe.Services;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 
 namespace Safe.ViewModels
 {
@@ -84,10 +83,7 @@ namespace Safe.ViewModels
 
         public bool IsNavigationTarget(NavigationContext navigationContext) => true;
 
-        public void OnNavigatedFrom(NavigationContext navigationContext)
-        {
-            throw new NotImplementedException();
-        }
+        public void OnNavigatedFrom(NavigationContext navigationContext) { }
 
         private string _storagePath;
         public string StoragePath
@@ -103,6 +99,9 @@ namespace Safe.ViewModels
             get { return _language; }
             set { SetProperty(ref _language, value); }
         }
+
+        public IReadOnlyCollection<string> AvailableLanguages { get; }
+            = new[] { "en-US", "ru-RU" };
 
         public DelegateCommand OkCommand { get; }
 
