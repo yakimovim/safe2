@@ -32,6 +32,7 @@ namespace Safe
             containerRegistry.RegisterForNavigation<EditItemView>();
             containerRegistry.RegisterForNavigation<EditFieldView>();
             containerRegistry.RegisterForNavigation<SettingsView>();
+            containerRegistry.RegisterForNavigation<ChangePasswordView>();
 
             containerRegistry.RegisterDialog<YesNoDialog, YesNoDialogViewModel>();
         }

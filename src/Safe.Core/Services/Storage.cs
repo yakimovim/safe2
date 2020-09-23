@@ -18,11 +18,15 @@ namespace Safe.Core.Services
         /// </summary>
         bool LoggedIn { get; }
         /// <summary>
+        /// Event signaling about change of logged in status.
+        /// </summary>
+        event EventHandler LoggedInChanged;
+
+        /// <summary>
         /// Creates new storage.
         /// </summary>
         /// <param name="password">Password.</param>
         void Create(Password password);
-
         /// <summary>
         /// Logs into the storage.
         /// </summary>
@@ -74,6 +78,8 @@ namespace Safe.Core.Services
 
         public bool Exists => _storageStreamProvider.StorageExists;
 
+        public event EventHandler LoggedInChanged;
+
         public void ChangePassword(Password oldPassword, Password newPassword)
         {
             if (oldPassword is null)
@@ -120,12 +126,15 @@ namespace Safe.Core.Services
             }
 
             if (!Exists) throw new InvalidOperationException("Storage does not exist.");
+            if (LoggedIn) throw new InvalidOperationException("You are already logged in.");
 
             try
             {
                 _password = password;
 
                 Read();
+
+                LoggedInChanged?.Invoke(this, EventArgs.Empty);
 
                 return true;
             }
@@ -142,6 +151,8 @@ namespace Safe.Core.Services
             if (!LoggedIn) throw new InvalidOperationException("You are not logged in");
 
             _password = null;
+
+            LoggedInChanged?.Invoke(this, EventArgs.Empty);
         }
 
         public Container Read()

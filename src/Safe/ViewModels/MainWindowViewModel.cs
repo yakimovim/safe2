@@ -1,24 +1,45 @@
 ﻿using Prism.Commands;
 using Prism.Mvvm;
+using Safe.Core.Services;
 using Safe.Services;
-using System.Collections.ObjectModel;
+using System;
 using System.Windows;
-using System.Windows.Controls;
 
 namespace Safe.ViewModels
 {
     public class MainWindowViewModel : BindableBase
     {
         private readonly INavigationService _navigationService;
+        private readonly IStorage _storage;
 
-        public MainWindowViewModel(INavigationService navigationService)
+        public MainWindowViewModel(
+            INavigationService navigationService,
+            IStorage storage)
         {
-            _navigationService = navigationService ?? throw new System.ArgumentNullException(nameof(navigationService));
+            _navigationService = navigationService ?? throw new ArgumentNullException(nameof(navigationService));
+            _storage = storage ?? throw new ArgumentNullException(nameof(storage));
+
+            _storage.LoggedInChanged += OnLoggedInChanged;
+
+            ChangePasswordCommand = new DelegateCommand(ChangePassword)
+                .ObservesCanExecute(() => CanChangePassword);
 
             SettingsCommand = new DelegateCommand(Settings);
 
             ExitCommand = new DelegateCommand(Exit);
         }
+
+        private void OnLoggedInChanged(object sender, EventArgs e)
+        {
+            RaisePropertyChanged(nameof(CanChangePassword));
+        }
+
+        private void ChangePassword()
+        {
+            _navigationService.NavigateMainContentTo("ChangePasswordView");
+        }
+
+        public bool CanChangePassword => _storage.LoggedIn;
 
         private void Settings()
         {
@@ -29,6 +50,8 @@ namespace Safe.ViewModels
         {
             Application.Current.Shutdown();
         }
+
+        public DelegateCommand ChangePasswordCommand { get; }
 
         public DelegateCommand SettingsCommand { get; }
 
