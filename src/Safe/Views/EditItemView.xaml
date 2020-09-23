@@ -28,10 +28,12 @@
                                 <TextBlock Text="Type:" FontSize="24" Margin="5" />
                                 <TextBlock Text="{Binding Type}" FontSize="24" Margin="5" />
                                 <TextBlock Text="Label:" FontSize="24" Margin="5" />
-                                <TextBlock Text="{Binding Label}" FontSize="24" Margin="5" />
+                                <TextBox Text="{Binding Label}" FontSize="24" Margin="5" />
                                 <StackPanel Orientation="Horizontal">
                                     <Button Content="Edit" Command="{Binding EditCommand}" />
                                     <Button Content="Delete" Command="{Binding DeleteCommand}" />
+                                    <Button Content="MoveUp" Command="{Binding MoveUpCommand}" />
+                                    <Button Content="MoveDown" Command="{Binding MoveDownCommand}" />
                                 </StackPanel>
                             </StackPanel>
                         </Border>

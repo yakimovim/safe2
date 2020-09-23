@@ -15,6 +15,10 @@ namespace Safe.ViewModels.Domain
 
         public DelegateCommand EditCommand { get; }
 
+        public DelegateCommand MoveUpCommand { get; }
+
+        public DelegateCommand MoveDownCommand { get; }
+
         protected FieldViewModel(
             Field model, 
             IContainer<FieldViewModel> parentContainer, 
@@ -26,6 +30,9 @@ namespace Safe.ViewModels.Domain
 
             DeleteCommand = new DelegateCommand(OnDelete);
             EditCommand = new DelegateCommand(OnEdit);
+
+            MoveUpCommand = new DelegateCommand(MoveUp, () => CanMoveUp);
+            MoveDownCommand = new DelegateCommand(MoveDown, () => CanMoveDown);
         }
 
         private void OnDelete()
