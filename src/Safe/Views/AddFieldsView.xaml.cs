@@ -3,11 +3,11 @@
 namespace Safe.Views
 {
     /// <summary>
-    /// Interaction logic for EditFieldView
+    /// Interaction logic for AddFieldsView
     /// </summary>
-    public partial class EditFieldView : UserControl
+    public partial class AddFieldsView : UserControl
     {
-        public EditFieldView()
+        public AddFieldsView()
         {
             InitializeComponent();
         }

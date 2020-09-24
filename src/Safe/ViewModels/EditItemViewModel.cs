@@ -25,7 +25,7 @@ namespace Safe.ViewModels
 
         public DelegateCommand CancelCommand { get; }
 
-        public DelegateCommand AddFieldCommand { get; }
+        public DelegateCommand AddFieldsCommand { get; }
 
         public EditItemViewModel(INavigationService navigationService)
         {
@@ -33,7 +33,7 @@ namespace Safe.ViewModels
 
             OkCommand = new DelegateCommand(Save);
             CancelCommand = new DelegateCommand(Cancel);
-            AddFieldCommand = new DelegateCommand(AddField);
+            AddFieldsCommand = new DelegateCommand(AddFields);
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext) => true;
@@ -77,13 +77,14 @@ namespace Safe.ViewModels
             _journal.GoBack();
         }
 
-        private void AddField()
+        private void AddFields()
         {
             var p = new NavigationParameters();
-            p.Add("IsEditing", false);
+            //p.Add("IsEditing", false);
             p.Add("Container", Item);
 
-            _navigationService.NavigateMainContentTo("EditFieldView", p);
+            //_navigationService.NavigateMainContentTo("EditFieldView", p);
+            _navigationService.NavigateMainContentTo("AddFieldsView", p);
         }
     }
 }

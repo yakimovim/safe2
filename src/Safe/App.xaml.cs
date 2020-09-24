@@ -30,9 +30,9 @@ namespace Safe
             containerRegistry.RegisterForNavigation<CreateStorageView>();
             containerRegistry.RegisterForNavigation<ItemsView>();
             containerRegistry.RegisterForNavigation<EditItemView>();
-            containerRegistry.RegisterForNavigation<EditFieldView>();
             containerRegistry.RegisterForNavigation<SettingsView>();
             containerRegistry.RegisterForNavigation<ChangePasswordView>();
+            containerRegistry.RegisterForNavigation<AddFieldsView>();
 
             containerRegistry.RegisterDialog<YesNoDialog, YesNoDialogViewModel>();
         }

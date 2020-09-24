@@ -10,7 +10,7 @@
         <TextBox FontSize="30" Text="{Binding Item.Description}" DockPanel.Dock="Top" Margin="5" />
         <TextBlock Text="Tags:" FontSize="30" DockPanel.Dock="Top" Margin="5" />
         <TextBox FontSize="30" Text="{Binding Item.Tags}" DockPanel.Dock="Top" Margin="5" />
-        <Button Content="Add field" Command="{Binding AddFieldCommand}" DockPanel.Dock="Top"
+        <Button Content="Add fields" Command="{Binding AddFieldsCommand}" DockPanel.Dock="Top"
                 FontSize="30" Margin="5" />
         <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom">
             <Button Content="Ok" FontSize="30" Command="{Binding OkCommand}" />
