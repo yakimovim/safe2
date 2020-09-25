@@ -139,6 +139,11 @@ namespace Safe.ViewModels.Domain
             Fields.RemoveAt(index);
 
             Fields.Insert(index - 1, item);
+
+            foreach (var field in Fields)
+            {
+                field.RefreshPosition();
+            }
         }
 
         public void MoveDown(FieldViewModel item)
@@ -157,6 +162,11 @@ namespace Safe.ViewModels.Domain
             Fields.RemoveAt(index);
 
             Fields.Insert(index + 1, item);
+
+            foreach (var field in Fields)
+            {
+                field.RefreshPosition();
+            }
         }
 
         bool IContainer<FieldViewModel>.CanMoveUp(FieldViewModel item)

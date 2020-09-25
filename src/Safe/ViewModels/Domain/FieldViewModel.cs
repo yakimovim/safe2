@@ -35,6 +35,12 @@ namespace Safe.ViewModels.Domain
             MoveDownCommand = new DelegateCommand(MoveDown, () => CanMoveDown);
         }
 
+        public void RefreshPosition()
+        {
+            MoveUpCommand.RaiseCanExecuteChanged();
+            MoveDownCommand.RaiseCanExecuteChanged();
+        }
+
         private void OnDelete()
         {
             _navigationService.ShowYesNoDialog("Do you want to delete this field?", res => {
