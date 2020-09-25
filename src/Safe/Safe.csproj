@@ -6,6 +6,17 @@
     <AssemblyName>Safe</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Images\copy24.png" />
+    <None Remove="Images\create32.png" />
+    <None Remove="Images\edit24.png" />
+    <None Remove="Images\moveDown24.png" />
+    <None Remove="Images\moveUp24.png" />
+    <None Remove="Images\multiLine32.png" />
+    <None Remove="Images\password32.png" />
+    <None Remove="Images\singleLine32.png" />
+    <None Remove="Images\trash24.png" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="AutoMapper" Version="10.0.0" />
     <PackageReference Include="Prism.Unity" Version="7.2.0.1422" />
   </ItemGroup>
@@ -24,5 +35,16 @@
       <Generator>PublicSettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\copy24.png" />
+    <Resource Include="Images\create32.png" />
+    <Resource Include="Images\edit24.png" />
+    <Resource Include="Images\moveDown24.png" />
+    <Resource Include="Images\moveUp24.png" />
+    <Resource Include="Images\multiLine32.png" />
+    <Resource Include="Images\password32.png" />
+    <Resource Include="Images\singleLine32.png" />
+    <Resource Include="Images\trash24.png" />
   </ItemGroup>
 </Project>

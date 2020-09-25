@@ -3,7 +3,9 @@ using Prism.Regions;
 using Safe.Core.Domain;
 using Safe.Services;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace Safe.ViewModels.Domain
 {
@@ -45,6 +47,8 @@ namespace Safe.ViewModels.Domain
             set { SetProperty(ref _tags, value); }
         }
 
+        public IReadOnlyCollection<string> TagsCollection => Model.Tags.ToArray();
+
         public ObservableCollection<FieldViewModel> Fields { get; } = new ObservableCollection<FieldViewModel>();
 
         public DelegateCommand DeleteCommand { get; }
@@ -72,6 +76,8 @@ namespace Safe.ViewModels.Domain
             {
                 field.FillModel();
             }
+
+            RaisePropertyChanged(nameof(TagsCollection));
         }
 
         public override void RefreshFromModel()

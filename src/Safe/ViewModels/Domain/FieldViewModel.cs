@@ -13,8 +13,6 @@ namespace Safe.ViewModels.Domain
 
         public DelegateCommand DeleteCommand { get; }
 
-        public DelegateCommand EditCommand { get; }
-
         public DelegateCommand MoveUpCommand { get; }
 
         public DelegateCommand MoveDownCommand { get; }
@@ -29,7 +27,6 @@ namespace Safe.ViewModels.Domain
             _navigationService = navigationService ?? throw new ArgumentNullException(nameof(navigationService));
 
             DeleteCommand = new DelegateCommand(OnDelete);
-            EditCommand = new DelegateCommand(OnEdit);
 
             MoveUpCommand = new DelegateCommand(MoveUp, () => CanMoveUp);
             MoveDownCommand = new DelegateCommand(MoveDown, () => CanMoveDown);
@@ -49,16 +46,6 @@ namespace Safe.ViewModels.Domain
                     Delete();
                 }
             });
-        }
-
-        private void OnEdit()
-        {
-            var p = new NavigationParameters();
-            p.Add("Container", ParentContainer);
-            p.Add("Item", this);
-            p.Add("IsEditing", true);
-
-            _navigationService.NavigateMainContentTo("EditFieldView", p);
         }
 
         public FieldTypes Type => Model.Type;
