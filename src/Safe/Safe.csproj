@@ -15,6 +15,7 @@
     <None Remove="Images\password32.png" />
     <None Remove="Images\singleLine32.png" />
     <None Remove="Images\trash24.png" />
+    <None Remove="Images\view24.png" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="10.0.0" />
@@ -47,5 +48,6 @@
     <Resource Include="Images\password32.png" />
     <Resource Include="Images\singleLine32.png" />
     <Resource Include="Images\trash24.png" />
+    <Resource Include="Images\view24.png" />
   </ItemGroup>
 </Project>

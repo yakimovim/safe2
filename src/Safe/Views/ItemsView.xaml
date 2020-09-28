@@ -111,9 +111,21 @@
                                                             Background="Transparent">
                                                         <Image Source="/Images/copy24.png" Width="24" Height="24"/>
                                                     </Button>
-                                                    <PasswordBox util:PasswordHelper.Attach="True" 
+                                                    <ToggleButton x:Name="togglePasswordView"
+                                                        DockPanel.Dock="Right" Background="Transparent">
+                                                        <Image Source="/Images/view24.png" Width="24" Height="24"/>
+                                                    </ToggleButton>
+                                                    <Grid>
+                                                        <PasswordBox util:PasswordHelper.Attach="True" 
                                                              util:PasswordHelper.Password="{Binding Text, Mode=TwoWay}" 
-                                                             FontSize="16" />
+                                                             FontSize="16"
+                                                             Visibility="{Binding ElementName=togglePasswordView, Path=IsChecked,
+                                                                Converter={StaticResource visibilityConverter}, ConverterParameter=Invert}" />
+                                                        <TextBox Text="{Binding Text}"
+                                                             FontSize="16"
+                                                             Visibility="{Binding ElementName=togglePasswordView, Path=IsChecked,
+                                                                Converter={StaticResource visibilityConverter}}" />
+                                                    </Grid>
                                                 </DockPanel>
                                             </StackPanel>
                                         </DataTemplate>
