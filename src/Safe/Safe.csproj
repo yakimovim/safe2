@@ -19,6 +19,7 @@
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="10.0.0" />
     <PackageReference Include="Prism.Unity" Version="7.2.0.1422" />
+    <PackageReference Include="System.Reactive" Version="4.4.1" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Safe.Core\Safe.Core.csproj" />

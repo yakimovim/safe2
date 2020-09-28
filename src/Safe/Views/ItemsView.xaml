@@ -19,7 +19,7 @@
                 <Image Source="/Images/create32.png" Width="32" Height="32" />
             </Button>
             <TextBox FontSize="30" Margin="5" 
-                     Text="{Binding SearchText}" 
+                     Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" 
                      HorizontalAlignment="Stretch"/>
         </DockPanel>
 

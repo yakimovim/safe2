@@ -9,6 +9,8 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Reactive.Linq;
+using System.Reactive.Subjects;
 using System.Windows;
 
 namespace Safe.ViewModels
@@ -26,11 +28,18 @@ namespace Safe.ViewModels
         private List<ItemViewModel> _allItems;
 
         private string _searchText;
+        private readonly Subject<string> _searchSubject = new Subject<string>();
 
         public string SearchText
         {
             get { return _searchText; }
-            set { SetProperty(ref _searchText, value); }
+            set 
+            { 
+                if(SetProperty(ref _searchText, value))
+                {
+                    _searchSubject.OnNext(_searchText);
+                }
+            }
         }
 
         public ObservableCollection<ItemViewModel> Items { get; } 
@@ -51,6 +60,27 @@ namespace Safe.ViewModels
             Application.Current.Exit += OnApplicationExit;
 
             CreateNewItemCommand = new DelegateCommand(CreateNewItem);
+
+            _searchSubject
+                .Throttle(TimeSpan.FromSeconds(1))
+                .ObserveOnDispatcher()
+                .Subscribe(searchText =>
+                {
+                    UpdateVisibleItems();
+                });
+        }
+
+        private void UpdateVisibleItems()
+        {
+            var visibleItems = _allItems.AsEnumerable();
+
+            if(!string.IsNullOrWhiteSpace(SearchText))
+            {
+                visibleItems = visibleItems.Where(i => i.Model.Contains(SearchText));
+            }
+
+            Items.Clear();
+            Items.AddRange(visibleItems.Take(20));
         }
 
         private void OnApplicationExit(object sender, ExitEventArgs e)
@@ -78,7 +108,7 @@ namespace Safe.ViewModels
 
             _container.Items.Add(item.Model);
 
-            Items.Add(item);
+            UpdateVisibleItems();
         }
 
         public void Delete(ItemViewModel item)
@@ -92,7 +122,7 @@ namespace Safe.ViewModels
 
             _container.Items.Remove(item.Model);
 
-            Items.Remove(item);
+            UpdateVisibleItems();
         }
 
         public bool CanMoveUp(ItemViewModel item) => false;
@@ -128,9 +158,9 @@ namespace Safe.ViewModels
                 _allItems = _container.Items
                     .Select(i => new ItemViewModel(i, this, _mapper, _navigationService))
                     .ToList();
-
-                Items.AddRange(_allItems);
             }
+
+            UpdateVisibleItems();
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext) => true;
