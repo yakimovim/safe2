@@ -4,7 +4,7 @@
         xmlns:prism="http://prismlibrary.com/"
         xmlns:util="clr-namespace:Safe.Utilities"
         prism:ViewModelLocator.AutoWireViewModel="True"
-        Title="Safe" Height="350" Width="525" >
+        Title="Safe" Height="350" Width="525" Icon="/Images/safe24.png" >
     <Window.Resources>
         <util:BoolToVisibilityConverter x:Key="visibilityConverter" />
     </Window.Resources>

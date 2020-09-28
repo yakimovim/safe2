@@ -13,6 +13,7 @@
     <None Remove="Images\moveUp24.png" />
     <None Remove="Images\multiLine32.png" />
     <None Remove="Images\password32.png" />
+    <None Remove="Images\safe24.png" />
     <None Remove="Images\singleLine32.png" />
     <None Remove="Images\trash24.png" />
     <None Remove="Images\view24.png" />
@@ -46,6 +47,7 @@
     <Resource Include="Images\moveUp24.png" />
     <Resource Include="Images\multiLine32.png" />
     <Resource Include="Images\password32.png" />
+    <Resource Include="Images\safe24.png" />
     <Resource Include="Images\singleLine32.png" />
     <Resource Include="Images\trash24.png" />
     <Resource Include="Images\view24.png" />
