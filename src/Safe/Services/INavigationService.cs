@@ -9,6 +9,8 @@ namespace Safe.Services
         void ShowYesNoDialog(string message, Action<IDialogResult> closeAction, string title = null);
 
         void NavigateMainContentTo(string target, NavigationParameters navigationParameters = null);
+
+        void ShowPasswordGenerationDialog();
     }
 
     public sealed class NavigationService : INavigationService
@@ -27,6 +29,13 @@ namespace Safe.Services
         public void NavigateMainContentTo(string target, NavigationParameters navigationParameters = null)
         {
             _regionManager.RequestNavigate("ContentRegion", target, navigationParameters);
+        }
+
+        public void ShowPasswordGenerationDialog()
+        {
+            var p = new DialogParameters();
+
+            _dialogService.Show("PasswordGenerationDialog", p, res => { });
         }
 
         public void ShowYesNoDialog(string message, Action<IDialogResult> closeAction, string title = null)

@@ -15,7 +15,7 @@
     <DockPanel LastChildFill="True">
         <DockPanel DockPanel.Dock="Top" LastChildFill="True"
                     HorizontalAlignment="Stretch">
-            <Button Margin="5" DockPanel.Dock="Left"                     Command="{Binding CreateNewItemCommand}">
+            <Button Margin="5" DockPanel.Dock="Left" Command="{Binding CreateNewItemCommand}">
                 <Image Source="/Images/create32.png" Width="32" Height="32" />
             </Button>
             <TextBox FontSize="30" Margin="5" 

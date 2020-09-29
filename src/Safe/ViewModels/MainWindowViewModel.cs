@@ -21,12 +21,19 @@ namespace Safe.ViewModels
 
             _storage.LoggedInChanged += OnLoggedInChanged;
 
+            GeneratePasswordCommand = new DelegateCommand(GeneratePassword);
+
             ChangePasswordCommand = new DelegateCommand(ChangePassword)
                 .ObservesCanExecute(() => CanChangePassword);
 
             SettingsCommand = new DelegateCommand(Settings);
 
             ExitCommand = new DelegateCommand(Exit);
+        }
+
+        private void GeneratePassword()
+        {
+            _navigationService.ShowPasswordGenerationDialog();
         }
 
         private void OnLoggedInChanged(object sender, EventArgs e)
@@ -50,6 +57,8 @@ namespace Safe.ViewModels
         {
             Application.Current.Shutdown();
         }
+
+        public DelegateCommand GeneratePasswordCommand { get; }
 
         public DelegateCommand ChangePasswordCommand { get; }
 

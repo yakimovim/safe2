@@ -24,6 +24,7 @@ namespace Safe
             containerRegistry.RegisterSingleton<IStorageStreamProvider, StorageStreamProvider>();
             containerRegistry.RegisterSingleton<IEncryptionService, EncryptionService>();
             containerRegistry.RegisterSingleton<IStorage, Storage>();
+            containerRegistry.RegisterSingleton<IPasswordGenerator, PasswordGenerator>();
             containerRegistry.RegisterSingleton<INavigationService, NavigationService>();
 
             containerRegistry.RegisterForNavigation<LoginView>();
@@ -35,6 +36,7 @@ namespace Safe
             containerRegistry.RegisterForNavigation<AddFieldsView>();
 
             containerRegistry.RegisterDialog<YesNoDialog, YesNoDialogViewModel>();
+            containerRegistry.RegisterDialog<PasswordGenerationDialog, PasswordGenerationDialogViewModel>();
         }
     }
 }
