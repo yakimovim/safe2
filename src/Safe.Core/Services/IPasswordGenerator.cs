@@ -50,10 +50,23 @@ namespace Safe.Core.Services
         private static IReadOnlyList<string> GetSymbolSets(bool useLetters, bool useDigits, bool usePunctuation)
         {
             var symbolSets = new List<string>();
-            
-            if (useLetters) symbolSets.Add(Letters);
-            if (useDigits) symbolSets.Add(Digits);
-            if (usePunctuation) symbolSets.Add(Punctuation);
+
+            if (useLetters)
+            {
+                symbolSets.Add(Letters);
+                symbolSets.Add(Letters);
+                symbolSets.Add(Letters);
+                symbolSets.Add(Letters);
+            }
+            if (useDigits)
+            {
+                symbolSets.Add(Digits);
+                symbolSets.Add(Digits);
+            }
+            if (usePunctuation)
+            {
+                symbolSets.Add(Punctuation);
+            }
 
             return symbolSets;
         }

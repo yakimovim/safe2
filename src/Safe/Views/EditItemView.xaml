@@ -16,13 +16,13 @@
         <TextBox FontSize="20" Text="{Binding Item.Tags}" DockPanel.Dock="Top" Margin="5,2,5,5" />
         <Button Content="Add fields" Command="{Binding AddFieldsCommand}" DockPanel.Dock="Top"
                 FontSize="16" Margin="5" />
-        <StackPanel Orientation="Horizontal" DockPanel.Dock="Bottom"
+        <StackPanel Style="{StaticResource BottomButtonsPanel}" DockPanel.Dock="Bottom"
                     HorizontalAlignment="Center">
-            <Button Content="Ok" FontSize="16" Width="100" 
-                    Margin="5"
+            <Button Style="{StaticResource GeneralButton}"
+                    Content="Ok"
                     Command="{Binding OkCommand}" />
-            <Button Content="Cancel" FontSize="16" Width="100" 
-                    Margin="5"
+            <Button Style="{StaticResource GeneralButton}" 
+                    Content="Cancel"
                     Command="{Binding CancelCommand}" />
         </StackPanel>
 

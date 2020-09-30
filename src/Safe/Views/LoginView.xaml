@@ -23,7 +23,8 @@
             FontSize="30"
             Margin="10"/>
         <Button x:Name="loginButton"
-        Content="Login" Width="100" FontSize="20"
-            Margin="10" Command="{Binding LoginCommand}" />
+                Style="{StaticResource GeneralButton}"
+                Content="Login" 
+                Command="{Binding LoginCommand}" />
     </StackPanel>
 </UserControl>

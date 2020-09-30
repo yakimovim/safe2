@@ -4,9 +4,13 @@
              xmlns:prism="http://prismlibrary.com/"             
              prism:ViewModelLocator.AutoWireViewModel="True">
     <DockPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch" LastChildFill="True">
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10" DockPanel.Dock="Bottom">
-            <Button Content="Ok" Command="{Binding OkCommand}" FontSize="16" Margin="5" Width="100"/>
-            <Button Content="Cancel" Command="{Binding CancelCommand}" FontSize="16" Margin="5" Width="100"/>
+        <StackPanel Style="{StaticResource BottomButtonsPanel}" DockPanel.Dock="Bottom">
+            <Button Style="{StaticResource GeneralButton}" 
+                    Content="Ok" 
+                    Command="{Binding OkCommand}" />
+            <Button Style="{StaticResource GeneralButton}" 
+                    Content="Cancel" 
+                    Command="{Binding CancelCommand}" />
         </StackPanel>
         <ScrollViewer HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto">
             <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch">

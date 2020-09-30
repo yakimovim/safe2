@@ -36,9 +36,13 @@
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
         </ScrollViewer>
-        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="5" Grid.Row="1">
-            <Button Content="Ok" Width="100" Margin="10" Command="{Binding OkCommand}" />
-            <Button Content="Cancel" Width="100" Margin="10" Command="{Binding CancelCommand}" />
+        <StackPanel Style="{StaticResource BottomButtonsPanel}" Grid.Row="1">
+            <Button Style="{StaticResource GeneralButton}"
+                    Content="Ok" 
+                    Command="{Binding OkCommand}" />
+            <Button Style="{StaticResource GeneralButton}" 
+                    Content="Cancel"
+                    Command="{Binding CancelCommand}" />
         </StackPanel>
     </Grid>
 </UserControl>

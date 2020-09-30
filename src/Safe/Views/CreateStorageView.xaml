@@ -22,6 +22,8 @@
             Width="300"
             FontSize="30"
             Margin="10"/>
-        <Button Content="Create" Width="100" FontSize="30" Margin="10" Command="{Binding CreateStorageCommand}" />
+        <Button Style="{StaticResource GeneralButton}" 
+                Content="Create" 
+                Command="{Binding CreateStorageCommand}" />
     </StackPanel>
 </UserControl>
