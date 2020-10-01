@@ -8,12 +8,12 @@
         <util:FieldTypeToImageConverter x:Key="fieldTypeConverter" />
     </UserControl.Resources>
     <DockPanel LastChildFill="True">
-        <TextBlock Text="Title:" FontSize="16" DockPanel.Dock="Top" Margin="5,5,5,0" />
-        <TextBox FontSize="20" Text="{Binding Item.Title}" DockPanel.Dock="Top" Margin="5,2,5,5" />
-        <TextBlock Text="Description:" FontSize="16" DockPanel.Dock="Top" Margin="5,5,5,0" />
-        <TextBox FontSize="20" Text="{Binding Item.Description}" DockPanel.Dock="Top" Margin="5,2,5,5" />
-        <TextBlock Text="Tags:" FontSize="16" DockPanel.Dock="Top" Margin="5,5,5,0" />
-        <TextBox FontSize="20" Text="{Binding Item.Tags}" DockPanel.Dock="Top" Margin="5,2,5,5" />
+        <TextBlock Text="Title:" Style="{StaticResource Label}" DockPanel.Dock="Top" />
+        <TextBox Text="{Binding Item.Title}" DockPanel.Dock="Top" Style="{StaticResource GeneralTextBox}" />
+        <TextBlock Text="Description:" Style="{StaticResource Label}" DockPanel.Dock="Top" />
+        <TextBox Text="{Binding Item.Description}" DockPanel.Dock="Top" Style="{StaticResource GeneralTextBox}" />
+        <TextBlock Text="Tags:" Style="{StaticResource Label}" DockPanel.Dock="Top" />
+        <TextBox Text="{Binding Item.Tags}" DockPanel.Dock="Top" Style="{StaticResource GeneralTextBox}" />
         <Button Content="Add fields" Command="{Binding AddFieldsCommand}" DockPanel.Dock="Top"
                 FontSize="16" Margin="5" />
         <StackPanel Style="{StaticResource BottomButtonsPanel}" DockPanel.Dock="Bottom"
@@ -57,9 +57,9 @@
                                     <Image Width="32" Height="32" DockPanel.Dock="Left"
                                            Margin="5"
                                            Source="{Binding Type, Converter={StaticResource fieldTypeConverter}}" />
-                                    <TextBlock Text="Label:" FontSize="16" Margin="5"
+                                    <TextBlock Text="Label:" Style="{StaticResource Label}"
                                                DockPanel.Dock="Left" VerticalAlignment="Center"/>
-                                    <TextBox Text="{Binding Label}" FontSize="16" Margin="5"
+                                    <TextBox Text="{Binding Label}" Style="{StaticResource GeneralTextBox}"
                                              VerticalAlignment="Center"/>
                                 </DockPanel>
                             </DockPanel>

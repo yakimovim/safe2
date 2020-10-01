@@ -12,13 +12,14 @@
     <UserControl.Resources>
         <util:BoolToVisibilityConverter x:Key="visibilityConverter" />
     </UserControl.Resources>
-    <DockPanel LastChildFill="True">
+    <DockPanel LastChildFill="True" FocusManager.FocusedElement="{Binding ElementName=searchTextBox}">
         <DockPanel DockPanel.Dock="Top" LastChildFill="True"
                     HorizontalAlignment="Stretch">
             <Button Margin="5" DockPanel.Dock="Left" Command="{Binding CreateNewItemCommand}">
                 <Image Source="/Images/create32.png" Width="32" Height="32" />
             </Button>
             <TextBox FontSize="30" Margin="5" 
+                     x:Name="searchTextBox"
                      Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" 
                      HorizontalAlignment="Stretch"/>
         </DockPanel>
@@ -77,7 +78,7 @@
                                             <StackPanel Orientation="Vertical" 
                                                         HorizontalAlignment="Stretch"
                                                         Margin="0,5,0,0">
-                                                <TextBlock Text="{Binding Label}" FontSize="16" DockPanel.Dock="Left" />
+                                                <TextBlock Text="{Binding Label}" Style="{StaticResource Label}" DockPanel.Dock="Left" />
                                                 <DockPanel HorizontalAlignment="Stretch" LastChildFill="True">
                                                     <Button Command="{Binding CopyCommand}" DockPanel.Dock="Left"
                                                             Background="Transparent">
@@ -91,7 +92,7 @@
                                             <StackPanel Orientation="Vertical" 
                                                         HorizontalAlignment="Stretch"
                                                         Margin="0,5,0,0">
-                                                <TextBlock Text="{Binding Label}" FontSize="16" DockPanel.Dock="Left" />
+                                                <TextBlock Text="{Binding Label}" Style="{StaticResource Label}" DockPanel.Dock="Left" />
                                                 <DockPanel HorizontalAlignment="Stretch" LastChildFill="True">
                                                     <Button Command="{Binding CopyCommand}" DockPanel.Dock="Left"
                                                             Background="Transparent">
@@ -105,7 +106,7 @@
                                             <StackPanel Orientation="Vertical" 
                                                         HorizontalAlignment="Stretch"
                                                         Margin="0,5,0,0">
-                                                <TextBlock Text="{Binding Label}" FontSize="16" DockPanel.Dock="Left" />
+                                                <TextBlock Text="{Binding Label}" Style="{StaticResource Label}" DockPanel.Dock="Left" />
                                                 <DockPanel HorizontalAlignment="Stretch" LastChildFill="True">
                                                     <Button Command="{Binding CopyCommand}" DockPanel.Dock="Left"
                                                             Background="Transparent">

@@ -24,10 +24,10 @@
                                     <Image Width="32" Height="32" DockPanel.Dock="Left"
                                            Margin="5"
                                            Source="{Binding Field.Type, Converter={StaticResource fieldTypeConverter}}" />
-                                    <TextBlock Text="Label:" Margin="5" FontSize="16"
+                                    <TextBlock Text="Label:" Style="{StaticResource Label}"
                                                VerticalAlignment="Center"/>
-                                    <TextBlock Text="{Binding Field.Label}" Margin="5" 
-                                               FontSize="16" Background="LightGray"
+                                    <TextBlock Text="{Binding Field.Label}" 
+                                               Style="{StaticResource Label}" Background="LightGray"
                                                VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
                                 </StackPanel>
                             </StackPanel>

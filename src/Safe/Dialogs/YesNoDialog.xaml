@@ -10,13 +10,16 @@
     <prism:Dialog.WindowStyle>
         <Style TargetType="Window">
             <Setter Property="Icon" Value="/Images/safe24.png" />
-            <Setter Property="Height" Value="150" />
+            <Setter Property="Height" Value="110" />
             <Setter Property="Width" Value="400" />
+            <Setter Property="MinHeight" Value="110" />
+            <Setter Property="MinWidth" Value="400" />
         </Style>
     </prism:Dialog.WindowStyle>
     <StackPanel Orientation="Vertical">
-        <TextBlock Text="{Binding Message}" FontSize="20" HorizontalAlignment="Center"
-                   Margin="10" />
+        <TextBlock Text="{Binding Message}" 
+                   Style="{StaticResource Label}" 
+                   HorizontalAlignment="Center" />
         <StackPanel Style="{StaticResource BottomButtonsPanel}">
             <Button Style="{StaticResource GeneralButton}" 
                     Content="Yes" 

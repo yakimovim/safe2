@@ -8,20 +8,21 @@
              prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <StackPanel Orientation="Vertical" FocusManager.FocusedElement="{Binding ElementName=password}"
-                HorizontalAlignment="Center" VerticalAlignment="Center">
+    <StackPanel Orientation="Vertical" 
+                FocusManager.FocusedElement="{Binding ElementName=password}"
+                HorizontalAlignment="Center" 
+                VerticalAlignment="Center">
         <TextBlock Text="Enter your password:"
                    HorizontalAlignment="Center"
-                   FontSize="20"
-                   Margin="10"
+                   Style="{StaticResource Label}"
                    />
         <PasswordBox x:Name="password"
             util:PasswordHelper.Attach="True" 
             util:PasswordHelper.Password="{Binding Password, Mode=TwoWay}"
             KeyUp="OnPasswordKeyUp"                     
             Width="300"
-            FontSize="30"
-            Margin="10"/>
+            Style="{StaticResource Password}"
+            />
         <Button x:Name="loginButton"
                 Style="{StaticResource GeneralButton}"
                 Content="Login" 
