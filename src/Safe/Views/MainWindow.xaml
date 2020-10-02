@@ -8,7 +8,7 @@
         Height="600" Width="800" 
         MinHeight="500" MinWidth="600" 
         WindowStartupLocation="CenterScreen"
-        Icon="/Images/safe24.png" >
+        Icon="/Images/safe.ico" >
     <Window.Resources>
         <util:BoolToVisibilityConverter x:Key="visibilityConverter" />
     </Window.Resources>

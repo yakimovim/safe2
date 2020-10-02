@@ -9,7 +9,7 @@
              d:DesignHeight="150" d:DesignWidth="400">
     <prism:Dialog.WindowStyle>
         <Style TargetType="Window">
-            <Setter Property="Icon" Value="/Images/safe24.png" />
+            <Setter Property="Icon" Value="/Images/safe.ico" />
             <Setter Property="Height" Value="110" />
             <Setter Property="Width" Value="400" />
             <Setter Property="MinHeight" Value="110" />
