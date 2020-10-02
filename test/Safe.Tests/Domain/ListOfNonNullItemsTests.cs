@@ -39,12 +39,6 @@ namespace Safe.Tests.Domain
         }
 
         [Fact]
-        public void IsReadOnly()
-        {
-            Assert.False(_list.IsReadOnly);
-        }
-
-        [Fact]
         public void Add_not_null()
         {
             _list.Add("ccc");
