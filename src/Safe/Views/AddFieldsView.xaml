@@ -38,9 +38,11 @@
         </ScrollViewer>
         <StackPanel Style="{StaticResource BottomButtonsPanel}" Grid.Row="1">
             <Button Style="{StaticResource GeneralButton}"
+                    IsDefault="True"
                     Content="Ok" 
                     Command="{Binding OkCommand}" />
             <Button Style="{StaticResource GeneralButton}" 
+                    IsCancel="True"
                     Content="Cancel"
                     Command="{Binding CancelCommand}" />
         </StackPanel>
