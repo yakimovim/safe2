@@ -13,16 +13,5 @@ namespace Safe.Views
 
             Loaded += (sender, e) => password.Focus();
         }
-
-        private void OnPasswordKeyUp(object sender, System.Windows.Input.KeyEventArgs e)
-        {
-            if(e.Key == System.Windows.Input.Key.Enter)
-            {
-                if (loginButton.Command.CanExecute(null))
-                { 
-                    loginButton.Command.Execute(null); 
-                }
-            }
-        }
     }
 }

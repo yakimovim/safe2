@@ -18,11 +18,10 @@
         <PasswordBox x:Name="password"
             util:PasswordHelper.Attach="True" 
             util:PasswordHelper.Password="{Binding Password, Mode=TwoWay}"
-            KeyUp="OnPasswordKeyUp"                     
             Width="300"
             Style="{StaticResource Password}"
             />
-        <Button x:Name="loginButton"
+        <Button IsDefault="True"
                 Style="{StaticResource GeneralButton}"
                 Content="Login" 
                 Command="{Binding LoginCommand}" />

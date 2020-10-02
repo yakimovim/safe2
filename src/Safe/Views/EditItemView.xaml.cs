@@ -10,6 +10,8 @@ namespace Safe.Views
         public EditItemView()
         {
             InitializeComponent();
+
+            Loaded += (sender, e) => titleText.Focus();
         }
     }
 }

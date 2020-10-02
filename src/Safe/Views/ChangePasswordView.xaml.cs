@@ -10,6 +10,8 @@ namespace Safe.Views
         public ChangePasswordView()
         {
             InitializeComponent();
+
+            Loaded += (sender, e) => oldPassword.Focus();
         }
     }
 }
