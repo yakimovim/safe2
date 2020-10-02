@@ -10,6 +10,19 @@ namespace Safe.Views
         public CreateStorageView()
         {
             InitializeComponent();
+
+            Loaded += (sender, e) => password.Focus();
+        }
+
+        private void OnPasswordKeyUp(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == System.Windows.Input.Key.Enter)
+            {
+                if (createButton.Command.CanExecute(null))
+                {
+                    createButton.Command.Execute(null);
+                }
+            }
         }
     }
 }

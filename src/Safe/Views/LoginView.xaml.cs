@@ -10,6 +10,8 @@ namespace Safe.Views
         public LoginView()
         {
             InitializeComponent();
+
+            Loaded += (sender, e) => password.Focus();
         }
 
         private void OnPasswordKeyUp(object sender, System.Windows.Input.KeyEventArgs e)

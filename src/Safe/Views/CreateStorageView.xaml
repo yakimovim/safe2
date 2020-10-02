@@ -20,9 +20,11 @@
         <PasswordBox x:Name="password"
             util:PasswordHelper.Attach="True" 
             util:PasswordHelper.Password="{Binding Password, Mode=TwoWay}"
+            KeyUp="OnPasswordKeyUp"  
             Width="300"
             Style="{StaticResource Password}" />
-        <Button Style="{StaticResource GeneralButton}" 
+        <Button x:Name="createButton"
+                Style="{StaticResource GeneralButton}" 
                 Content="Create" 
                 Command="{Binding CreateStorageCommand}" />
     </StackPanel>

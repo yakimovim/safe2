@@ -12,7 +12,7 @@
     <UserControl.Resources>
         <util:BoolToVisibilityConverter x:Key="visibilityConverter" />
     </UserControl.Resources>
-    <DockPanel LastChildFill="True" FocusManager.FocusedElement="{Binding ElementName=searchTextBox}">
+    <DockPanel LastChildFill="True">
         <DockPanel DockPanel.Dock="Top" LastChildFill="True"
                     HorizontalAlignment="Stretch">
             <Button Margin="5" DockPanel.Dock="Left" Command="{Binding CreateNewItemCommand}">
