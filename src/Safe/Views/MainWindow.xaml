@@ -12,10 +12,13 @@
     <Window.Resources>
         <util:BoolToVisibilityConverter x:Key="visibilityConverter" />
     </Window.Resources>
+    <Window.InputBindings>
+        <KeyBinding Key="G" Modifiers="Ctrl" Command="{Binding GeneratePasswordCommand}" />
+    </Window.InputBindings>
     <DockPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch" LastChildFill="True">
         <Menu DockPanel.Dock="Top" >
             <MenuItem Header="File">
-                <MenuItem Header="Generate password..." Command="{Binding GeneratePasswordCommand}"/>
+                <MenuItem Header="Generate password..." Command="{Binding GeneratePasswordCommand}" />
                 <MenuItem Header="Change password..." Command="{Binding ChangePasswordCommand}"
                           Visibility="{Binding CanChangePassword, Converter={StaticResource visibilityConverter}}"/>
                 <MenuItem Header="Settings..." Command="{Binding SettingsCommand}"/>

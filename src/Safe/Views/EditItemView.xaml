@@ -7,6 +7,9 @@
     <UserControl.Resources>
         <util:FieldTypeToImageConverter x:Key="fieldTypeConverter" />
     </UserControl.Resources>
+    <UserControl.InputBindings>
+        <KeyBinding Key="N" Modifiers="Ctrl" Command="{Binding AddFieldsCommand}" />
+    </UserControl.InputBindings>
     <DockPanel LastChildFill="True">
         <TextBlock Text="Title:" Style="{StaticResource Label}" DockPanel.Dock="Top" />
         <TextBox x:Name="titleText"

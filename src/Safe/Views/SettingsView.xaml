@@ -6,9 +6,11 @@
     <DockPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch" LastChildFill="True">
         <StackPanel Style="{StaticResource BottomButtonsPanel}" DockPanel.Dock="Bottom">
             <Button Style="{StaticResource GeneralButton}" 
+                    IsDefault="True"
                     Content="Ok" 
                     Command="{Binding OkCommand}" />
             <Button Style="{StaticResource GeneralButton}" 
+                    IsCancel="True"
                     Content="Cancel" 
                     Command="{Binding CancelCommand}" />
         </StackPanel>

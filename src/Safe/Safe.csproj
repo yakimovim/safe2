@@ -10,6 +10,7 @@
     <None Remove="Images\copy24.png" />
     <None Remove="Images\create32.png" />
     <None Remove="Images\edit24.png" />
+    <None Remove="Images\exclamation24.png" />
     <None Remove="Images\moveDown24.png" />
     <None Remove="Images\moveUp24.png" />
     <None Remove="Images\multiLine32.png" />
@@ -44,6 +45,7 @@
     <Resource Include="Images\copy24.png" />
     <Resource Include="Images\create32.png" />
     <Resource Include="Images\edit24.png" />
+    <Resource Include="Images\exclamation24.png" />
     <Resource Include="Images\moveDown24.png" />
     <Resource Include="Images\moveUp24.png" />
     <Resource Include="Images\multiLine32.png" />

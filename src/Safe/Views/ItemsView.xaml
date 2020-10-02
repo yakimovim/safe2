@@ -12,6 +12,9 @@
     <UserControl.Resources>
         <util:BoolToVisibilityConverter x:Key="visibilityConverter" />
     </UserControl.Resources>
+    <UserControl.InputBindings>
+        <KeyBinding Key="N" Modifiers="Ctrl" Command="{Binding CreateNewItemCommand}" />
+    </UserControl.InputBindings>
     <DockPanel LastChildFill="True">
         <DockPanel DockPanel.Dock="Top" LastChildFill="True"
                     HorizontalAlignment="Stretch">
