@@ -16,11 +16,6 @@
         </StackPanel>
         <ScrollViewer HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto">
             <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch">
-                <TextBlock Text="Language:" Style="{StaticResource Label}" />
-                <ComboBox Margin="5" HorizontalAlignment="Stretch" 
-                          ItemsSource="{Binding AvailableLanguages}"
-                          SelectedItem="{Binding Language}"/>
-
                 <TextBlock Text="Storage path:" Style="{StaticResource Label}" />
                 <TextBox Text="{Binding StoragePath}" Style="{StaticResource GeneralTextBox}" />
             </StackPanel>

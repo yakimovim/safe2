@@ -31,7 +31,6 @@ namespace Safe.Tests.Services
             var configuration = new Configuration
             {
                 Salt = Encoding.ASCII.GetBytes(_salt),
-                Language = language,
                 StoragePath = storagePath
             };
 
@@ -41,7 +40,6 @@ namespace Safe.Tests.Services
 
             // Assert
 
-            Assert.Equal(language, settings.Language);
             Assert.Equal(storagePath, settings.StoragePath);
             Assert.Equal(_salt, settings.Salt);
         }
@@ -54,7 +52,6 @@ namespace Safe.Tests.Services
 
             var settings = new Settings
             {
-                Language = language,
                 StoragePath = storagePath,
                 Salt = _salt
             };
@@ -67,7 +64,6 @@ namespace Safe.Tests.Services
 
             // Assert
 
-            Assert.Equal(language, configuration.Language);
             Assert.Equal(storagePath, configuration.StoragePath);
             Assert.Equal(Encoding.ASCII.GetBytes(_salt), configuration.Salt);
         }

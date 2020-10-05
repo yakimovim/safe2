@@ -10,10 +10,6 @@
         /// </summary>
         byte[] Salt { get; } 
         /// <summary>
-        /// Language of the program.
-        /// </summary>
-        string Language { get; }
-        /// <summary>
         /// Path to the storage of data.
         /// </summary>
         string StoragePath { get; }
@@ -24,8 +20,6 @@
     /// </summary>
     public class Configuration : IConfiguration
     {
-        /// <inheritdoc />
-        public string Language { get; set; }
         /// <inheritdoc />
         public string StoragePath { get; set; }
         /// <inheritdoc />

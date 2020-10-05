@@ -92,17 +92,6 @@ namespace Safe.ViewModels
             set { SetProperty(ref _storagePath, value); }
         }
 
-        private string _language;
-
-        public string Language
-        {
-            get { return _language; }
-            set { SetProperty(ref _language, value); }
-        }
-
-        public IReadOnlyCollection<string> AvailableLanguages { get; }
-            = new[] { "en-US", "ru-RU" };
-
         public DelegateCommand OkCommand { get; }
 
         public DelegateCommand CancelCommand { get; }
