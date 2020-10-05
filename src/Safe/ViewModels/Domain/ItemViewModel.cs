@@ -15,8 +15,17 @@ namespace Safe.ViewModels.Domain
         public string Title
         {
             get { return _title; }
-            set { SetProperty(ref _title, value); }
+            set 
+            { 
+                if(SetProperty(ref _title, value))
+                {
+                    RaisePropertyChanged(nameof(TitleIsNotValid));
+                    RaisePropertyChanged(nameof(IsValid));
+                }
+            }
         }
+
+        public bool TitleIsNotValid => string.IsNullOrWhiteSpace(Title);
 
         private string _description;
         public string Description
@@ -51,6 +60,10 @@ namespace Safe.ViewModels.Domain
 
         public ObservableCollection<FieldViewModel> Fields { get; } = new ObservableCollection<FieldViewModel>();
 
+        public bool HasNoFields => Fields.Count == 0;
+
+        public bool IsValid => !TitleIsNotValid && !HasNoFields;
+
         public DelegateCommand DeleteCommand { get; }
 
         public DelegateCommand EditCommand { get; }
@@ -66,6 +79,11 @@ namespace Safe.ViewModels.Domain
 
             DeleteCommand = new DelegateCommand(OnDelete);
             EditCommand = new DelegateCommand(OnEdit);
+
+            Fields.CollectionChanged += (sender, e) => {
+                RaisePropertyChanged(nameof(HasNoFields));
+                RaisePropertyChanged(nameof(IsValid));
+            };
         }
 
         public override void FillModel()

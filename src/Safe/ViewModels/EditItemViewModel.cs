@@ -3,6 +3,7 @@ using Prism.Mvvm;
 using Prism.Regions;
 using Safe.Services;
 using System;
+using System.ComponentModel;
 
 namespace Safe.ViewModels
 {
@@ -21,6 +22,8 @@ namespace Safe.ViewModels
             set { SetProperty(ref itemViewModel, value); }
         }
 
+        public bool IsItemValid => Item?.IsValid ?? false;
+
         public DelegateCommand OkCommand { get; }
 
         public DelegateCommand CancelCommand { get; }
@@ -31,20 +34,21 @@ namespace Safe.ViewModels
         {
             _navigationService = navigationService ?? throw new ArgumentNullException(nameof(navigationService));
 
-            OkCommand = new DelegateCommand(Save);
+            OkCommand = new DelegateCommand(Save)
+                .ObservesCanExecute(() => IsItemValid);
             CancelCommand = new DelegateCommand(Cancel);
             AddFieldsCommand = new DelegateCommand(AddFields);
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext) => true;
 
-        public void OnNavigatedFrom(NavigationContext navigationContext)
-        {
-        }
+        public void OnNavigatedFrom(NavigationContext navigationContext) { }
 
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
             _journal = navigationContext.NavigationService.Journal;
+
+            RaisePropertyChanged(nameof(IsItemValid));
 
             // If this is just a back navigation do not change Item and IsEditing
             if (!navigationContext.Parameters.ContainsKey("Item")) return;

@@ -20,6 +20,13 @@ namespace Safe.ViewModels
             set { SetProperty(ref _password, value); }
         }
 
+        private bool _passwordIsIncorrect;
+        public bool PasswordIsIncorrect
+        {
+            get { return _passwordIsIncorrect; }
+            set { SetProperty(ref _passwordIsIncorrect, value); }
+        }
+
         public LoginViewModel(
             IStorage storage,
             INavigationService navigationService)
@@ -40,6 +47,10 @@ namespace Safe.ViewModels
             {
                 _navigationService.NavigateMainContentTo("ItemsView");
             }
+            else
+            {
+                PasswordIsIncorrect = true;
+            }
         }
 
         public void OnNavigatedTo(NavigationContext navigationContext)
@@ -49,6 +60,7 @@ namespace Safe.ViewModels
                 _navigationService.NavigateMainContentTo("ItemsView");
             }
 
+            PasswordIsIncorrect = false;
             Password = string.Empty;
         }
 

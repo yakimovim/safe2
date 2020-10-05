@@ -6,17 +6,25 @@
              prism:ViewModelLocator.AutoWireViewModel="True">
     <UserControl.Resources>
         <util:FieldTypeToImageConverter x:Key="fieldTypeConverter" />
+        <util:BoolToVisibilityConverter x:Key="visibilityConverter" />
     </UserControl.Resources>
     <UserControl.InputBindings>
         <KeyBinding Key="N" Modifiers="Ctrl" Command="{Binding AddFieldsCommand}" />
     </UserControl.InputBindings>
     <DockPanel LastChildFill="True">
         <TextBlock Text="Title:" Style="{StaticResource Label}" DockPanel.Dock="Top" />
-        <TextBox x:Name="titleText"
-            TabIndex="0"
-            Text="{Binding Item.Title}" 
-            DockPanel.Dock="Top" 
-            Style="{StaticResource GeneralTextBox}" />
+        <DockPanel DockPanel.Dock="Top" LastChildFill="True">
+            <Image DockPanel.Dock="Right" 
+                   Style="{StaticResource Image24}"
+                   Margin="2,2,5,2"
+                   Source="/Images/exclamation24.png"
+                   Visibility="{Binding Item.TitleIsNotValid, Converter={StaticResource visibilityConverter}}"
+                   ToolTip="Title can't be empty"/>
+            <TextBox x:Name="titleText"
+                TabIndex="0"
+                Text="{Binding Item.Title, UpdateSourceTrigger=PropertyChanged}" 
+                Style="{StaticResource GeneralTextBox}" />
+        </DockPanel>
         <TextBlock Text="Description:" Style="{StaticResource Label}" DockPanel.Dock="Top" />
         <TextBox 
             TabIndex="1"
@@ -29,8 +37,16 @@
             Text="{Binding Item.Tags}" 
             DockPanel.Dock="Top" 
             Style="{StaticResource GeneralTextBox}" />
-        <Button Content="Add fields" Command="{Binding AddFieldsCommand}" DockPanel.Dock="Top"
+        <DockPanel DockPanel.Dock="Top" LastChildFill="True">
+            <Image DockPanel.Dock="Right" 
+                   Style="{StaticResource Image24}"
+                   Margin="2,2,5,2"
+                   Source="/Images/exclamation24.png"
+                   Visibility="{Binding Item.HasNoFields, Converter={StaticResource visibilityConverter}}"
+                   ToolTip="There must be at least one field"/>
+            <Button Content="Add fields" Command="{Binding AddFieldsCommand}"
                 FontSize="16" Margin="5" TabIndex="4" />
+        </DockPanel>
         <StackPanel Style="{StaticResource BottomButtonsPanel}" DockPanel.Dock="Bottom"
                     HorizontalAlignment="Center">
             <Button Style="{StaticResource GeneralButton}"
@@ -56,17 +72,20 @@
                                             VerticalAlignment="Center">
                                     <Button Command="{Binding MoveUpCommand}" 
                                             Margin="2"
-                                            Background="Transparent">
+                                            Background="Transparent"
+                                            ToolTip="Move field up">
                                         <Image Source="/Images/moveUp24.png" Width="24" Height="24" />
                                     </Button>
                                     <Button Command="{Binding DeleteCommand}" 
                                             Margin="2"
-                                            Background="Transparent">
+                                            Background="Transparent"
+                                            ToolTip="Delete field...">
                                         <Image Source="/Images/trash24.png" Width="24" Height="24" />
                                     </Button>
                                     <Button Command="{Binding MoveDownCommand}"
                                             Margin="2"
-                                            Background="Transparent">
+                                            Background="Transparent"
+                                            ToolTip="Move field down">
                                         <Image Source="/Images/moveDown24.png" Width="24" Height="24" />
                                     </Button>
                                 </StackPanel>

@@ -1,8 +1,12 @@
 ﻿<UserControl x:Class="Safe.Views.SettingsView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:util="clr-namespace:Safe.Utilities"             
              xmlns:prism="http://prismlibrary.com/"             
              prism:ViewModelLocator.AutoWireViewModel="True">
+    <UserControl.Resources>
+        <util:BoolToVisibilityConverter x:Key="visibilityConverter" />
+    </UserControl.Resources>
     <DockPanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch" LastChildFill="True">
         <StackPanel Style="{StaticResource BottomButtonsPanel}" DockPanel.Dock="Bottom">
             <Button Style="{StaticResource GeneralButton}" 
@@ -17,7 +21,16 @@
         <ScrollViewer HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto">
             <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch">
                 <TextBlock Text="Storage path:" Style="{StaticResource Label}" />
-                <TextBox Text="{Binding StoragePath}" Style="{StaticResource GeneralTextBox}" />
+                <DockPanel LastChildFill="True">
+                    <Image DockPanel.Dock="Right" 
+                       Style="{StaticResource Image24}"
+                       Margin="2"
+                       Source="/Images/exclamation24.png"
+                       Visibility="{Binding StoragePathIsNotValid, Converter={StaticResource visibilityConverter}}"
+                       ToolTip="Storage path must not be empty"/>
+                    <TextBox Text="{Binding StoragePath, UpdateSourceTrigger=PropertyChanged}" 
+                             Style="{StaticResource GeneralTextBox}" />
+                </DockPanel>
             </StackPanel>
         </ScrollViewer>
     </DockPanel>

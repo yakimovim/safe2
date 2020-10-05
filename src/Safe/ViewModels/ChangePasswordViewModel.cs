@@ -18,30 +18,46 @@ namespace Safe.ViewModels
         {
             get { return _oldPassword; }
             set { 
-                SetProperty(ref _oldPassword, value);
+                if(SetProperty(ref _oldPassword, value))
+                {
+                    RaisePropertyChanged(nameof(OldPasswordIsEmpty));
+                }
                 OkCommand.RaiseCanExecuteChanged();
             }
         }
+
+        public bool OldPasswordIsEmpty => string.IsNullOrWhiteSpace(OldPassword);
 
         private string _newPassword1;
         public string NewPassword1
         {
             get { return _newPassword1; }
             set { 
-                SetProperty(ref _newPassword1, value);
+                if(SetProperty(ref _newPassword1, value))
+                {
+                    RaisePropertyChanged(nameof(NewPasswordIsEmpty));
+                    RaisePropertyChanged(nameof(NewPasswordIsNotValid));
+                }
                 OkCommand.RaiseCanExecuteChanged();
             }
         }
+
+        public bool NewPasswordIsEmpty => string.IsNullOrWhiteSpace(NewPassword1);
 
         private string _newPassword2;
         public string NewPassword2
         {
             get { return _newPassword2; }
             set { 
-                SetProperty(ref _newPassword2, value);
+                if(SetProperty(ref _newPassword2, value))
+                {
+                    RaisePropertyChanged(nameof(NewPasswordIsNotValid));
+                }
                 OkCommand.RaiseCanExecuteChanged();
             }
         }
+
+        public bool NewPasswordIsNotValid => NewPassword1 != NewPassword2;
 
         public ChangePasswordViewModel(
             IStorage storage,
@@ -97,6 +113,12 @@ namespace Safe.ViewModels
                 _navigationService.NavigateMainContentTo("LoginView");
                 return;
             }
+
+            OldPassword = string.Empty;
+            NewPassword1 = string.Empty;
+            NewPassword2 = string.Empty;
+
+            OkCommand.RaiseCanExecuteChanged();
         }
 
         public DelegateCommand OkCommand { get; }

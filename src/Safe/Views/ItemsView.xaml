@@ -18,7 +18,8 @@
     <DockPanel LastChildFill="True">
         <DockPanel DockPanel.Dock="Top" LastChildFill="True"
                     HorizontalAlignment="Stretch">
-            <Button Margin="5" DockPanel.Dock="Left" Command="{Binding CreateNewItemCommand}">
+            <Button Margin="5" DockPanel.Dock="Left" Command="{Binding CreateNewItemCommand}"
+                    ToolTip="Create new item...">
                 <Image Source="/Images/create32.png" Width="32" Height="32" />
             </Button>
             <TextBox FontSize="30" Margin="5" 
@@ -38,13 +39,15 @@
                                     <Button Command="{Binding EditCommand}" 
                                             DockPanel.Dock="Right"
                                             Background="Transparent"
-                                            Margin="2">
+                                            Margin="2"
+                                            ToolTip="Edit item...">
                                         <Image Source="/Images/edit24.png" Width="24" Height="24" />
                                     </Button>
                                     <Button Command="{Binding DeleteCommand}" 
                                             DockPanel.Dock="Right"
                                             Background="Transparent"
-                                            Margin="2">
+                                            Margin="2"
+                                            ToolTip="Delete item...">
                                         <Image Source="/Images/trash24.png" Width="24" Height="24" />
                                     </Button>
                                     <TextBlock Text="{Binding Title}" 
@@ -84,7 +87,8 @@
                                                 <TextBlock Text="{Binding Label}" Style="{StaticResource Label}" DockPanel.Dock="Left" />
                                                 <DockPanel HorizontalAlignment="Stretch" LastChildFill="True">
                                                     <Button Command="{Binding CopyCommand}" DockPanel.Dock="Left"
-                                                            Background="Transparent">
+                                                            Background="Transparent"
+                                                            ToolTip="Copy to clipboard">
                                                         <Image Source="/Images/copy24.png" Width="24" Height="24" />
                                                     </Button>
                                                     <TextBox Text="{Binding Text}" FontSize="16" />
@@ -98,7 +102,8 @@
                                                 <TextBlock Text="{Binding Label}" Style="{StaticResource Label}" DockPanel.Dock="Left" />
                                                 <DockPanel HorizontalAlignment="Stretch" LastChildFill="True">
                                                     <Button Command="{Binding CopyCommand}" DockPanel.Dock="Left"
-                                                            Background="Transparent">
+                                                            Background="Transparent"
+                                                            ToolTip="Copy to clipboard">
                                                         <Image Source="/Images/copy24.png" Width="24" Height="24"/>
                                                     </Button>
                                                     <TextBox Text="{Binding Text}" FontSize="16" />
@@ -112,11 +117,13 @@
                                                 <TextBlock Text="{Binding Label}" Style="{StaticResource Label}" DockPanel.Dock="Left" />
                                                 <DockPanel HorizontalAlignment="Stretch" LastChildFill="True">
                                                     <Button Command="{Binding CopyCommand}" DockPanel.Dock="Left"
-                                                            Background="Transparent">
+                                                            Background="Transparent"
+                                                            ToolTip="Copy to clipboard">
                                                         <Image Source="/Images/copy24.png" Width="24" Height="24"/>
                                                     </Button>
                                                     <ToggleButton x:Name="togglePasswordView"
-                                                        DockPanel.Dock="Right" Background="Transparent">
+                                                        DockPanel.Dock="Right" Background="Transparent"
+                                                        ToolTip="Toggle password visibility">
                                                         <Image Source="/Images/view24.png" Width="24" Height="24"/>
                                                     </ToggleButton>
                                                     <Grid>

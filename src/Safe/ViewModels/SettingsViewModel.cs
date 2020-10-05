@@ -5,7 +5,6 @@ using Safe.Core.Domain;
 using Safe.Core.Services;
 using Safe.Services;
 using System;
-using System.Collections.Generic;
 using System.IO;
 
 namespace Safe.ViewModels
@@ -29,7 +28,8 @@ namespace Safe.ViewModels
             _navigationService = navigationService ?? throw new ArgumentNullException(nameof(navigationService));
             _storage = storage ?? throw new ArgumentNullException(nameof(storage));
 
-            OkCommand = new DelegateCommand(SaveChanges);
+            OkCommand = new DelegateCommand(SaveChanges)
+                .ObservesCanExecute(() => IsValid);
             CancelCommand = new DelegateCommand(Cancel);
         }
 
@@ -89,8 +89,19 @@ namespace Safe.ViewModels
         public string StoragePath
         {
             get { return _storagePath; }
-            set { SetProperty(ref _storagePath, value); }
+            set 
+            { 
+                if(SetProperty(ref _storagePath, value))
+                {
+                    RaisePropertyChanged(nameof(StoragePathIsNotValid));
+                    RaisePropertyChanged(nameof(IsValid));
+                }
+            }
         }
+
+        public bool StoragePathIsNotValid => string.IsNullOrWhiteSpace(StoragePath);
+
+        public bool IsValid => !StoragePathIsNotValid;
 
         public DelegateCommand OkCommand { get; }
 
