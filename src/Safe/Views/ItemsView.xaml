@@ -19,7 +19,7 @@
         <DockPanel DockPanel.Dock="Top" LastChildFill="True"
                     HorizontalAlignment="Stretch">
             <Button Margin="5" DockPanel.Dock="Left" Command="{Binding CreateNewItemCommand}"
-                    ToolTip="Create new item...">
+                    ToolTip="Create new item (Ctrl-N)...">
                 <Image Source="/Images/create32.png" Width="32" Height="32" />
             </Button>
             <TextBox FontSize="30" Margin="5" 
@@ -29,7 +29,7 @@
         </DockPanel>
 
         <ScrollViewer HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto">
-            <ItemsControl Margin="5" ItemsSource="{Binding Items}" >
+            <ItemsControl Margin="5" ItemsSource="{Binding Items}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <Border BorderThickness="1" BorderBrush="LightGray"

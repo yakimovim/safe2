@@ -17,8 +17,16 @@ namespace Safe.ViewModels
         public string Password
         {
             get { return _password; }
-            set { SetProperty(ref _password, value); }
+            set 
+            { 
+                if(SetProperty(ref _password, value))
+                {
+                    RaisePropertyChanged(nameof(PasswordIsEmpty));
+                }
+            }
         }
+
+        public bool PasswordIsEmpty => string.IsNullOrWhiteSpace(Password);
 
         public CreateStorageViewModel(
             IStorage storage,

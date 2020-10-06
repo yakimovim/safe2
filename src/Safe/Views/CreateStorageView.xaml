@@ -8,6 +8,9 @@
              prism:ViewModelLocator.AutoWireViewModel="True"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <util:BoolToVisibilityConverter x:Key="visibilityConverter" />
+    </UserControl.Resources>
     <StackPanel Orientation="Vertical" FocusManager.FocusedElement="{Binding ElementName=password}">
         <TextBlock Text="Create storage:" 
                    HorizontalAlignment="Center" 
@@ -17,11 +20,19 @@
                    HorizontalAlignment="Center"
                    Style="{StaticResource Label}"
                    />
-        <PasswordBox x:Name="password"
-            util:PasswordHelper.Attach="True" 
-            util:PasswordHelper.Password="{Binding Password, Mode=TwoWay}"
-            Width="300"
-            Style="{StaticResource Password}" />
+        <DockPanel LastChildFill="True" HorizontalAlignment="Center">
+            <Image DockPanel.Dock="Right" 
+                   Style="{StaticResource Image24}"
+                   Margin="2"
+                   Source="/Images/exclamation24.png"
+                   Visibility="{Binding PasswordIsEmpty, Converter={StaticResource visibilityConverter}}"
+                   ToolTip="Password can't be empty"/>
+            <PasswordBox x:Name="password"
+                util:PasswordHelper.Attach="True" 
+                util:PasswordHelper.Password="{Binding Password, Mode=TwoWay}"
+                Width="300"
+                Style="{StaticResource Password}" />
+        </DockPanel>
         <Button IsDefault="True"
                 Style="{StaticResource GeneralButton}" 
                 Content="Create" 

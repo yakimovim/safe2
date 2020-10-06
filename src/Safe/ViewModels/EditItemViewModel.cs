@@ -50,12 +50,16 @@ namespace Safe.ViewModels
 
             RaisePropertyChanged(nameof(IsItemValid));
 
+            OkCommand.RaiseCanExecuteChanged();
+
             // If this is just a back navigation do not change Item and IsEditing
             if (!navigationContext.Parameters.ContainsKey("Item")) return;
 
             Item = navigationContext.Parameters.GetValue<Domain.ItemViewModel>("Item");
 
             if (Item == null) throw new InvalidOperationException();
+
+            OkCommand.RaiseCanExecuteChanged();
 
             IsEditing = navigationContext.Parameters.ContainsKey("IsEditing")
                 ? navigationContext.Parameters.GetValue<bool>("IsEditing")

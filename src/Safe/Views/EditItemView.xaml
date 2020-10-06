@@ -28,13 +28,13 @@
         <TextBlock Text="Description:" Style="{StaticResource Label}" DockPanel.Dock="Top" />
         <TextBox 
             TabIndex="1"
-            Text="{Binding Item.Description}" 
+            Text="{Binding Item.Description, UpdateSourceTrigger=PropertyChanged}" 
             DockPanel.Dock="Top" 
             Style="{StaticResource GeneralTextBox}" />
         <TextBlock Text="Tags:" Style="{StaticResource Label}" DockPanel.Dock="Top" />
         <TextBox 
             TabIndex="2"
-            Text="{Binding Item.Tags}" 
+            Text="{Binding Item.Tags, UpdateSourceTrigger=PropertyChanged}" 
             DockPanel.Dock="Top" 
             Style="{StaticResource GeneralTextBox}" />
         <DockPanel DockPanel.Dock="Top" LastChildFill="True">
