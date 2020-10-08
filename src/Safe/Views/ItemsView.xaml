@@ -28,7 +28,7 @@
                      HorizontalAlignment="Stretch"/>
         </DockPanel>
 
-        <ScrollViewer HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto">
+        <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
             <ItemsControl Margin="5" ItemsSource="{Binding Items}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
@@ -78,6 +78,7 @@
                                     </ItemsControl.ItemTemplate>
                                 </ItemsControl>
                                 <ItemsControl ItemsSource="{Binding Fields}" 
+                                              HorizontalAlignment="Stretch"
                                               Margin="5,10,5,5">
                                     <ItemsControl.Resources>
                                         <DataTemplate DataType="{x:Type vmd:SingleLineTextFieldViewModel}">
@@ -89,7 +90,8 @@
                                                     <Button Command="{Binding CopyCommand}" DockPanel.Dock="Left"
                                                             Background="Transparent"
                                                             ToolTip="Copy to clipboard">
-                                                        <Image Source="/Images/copy24.png" Width="24" Height="24" />
+                                                        <Image Source="/Images/copy24.png" 
+                                                               Style="{StaticResource Image24}" />
                                                     </Button>
                                                     <TextBox Text="{Binding Text}" FontSize="16" />
                                                 </DockPanel>
@@ -103,10 +105,18 @@
                                                 <DockPanel HorizontalAlignment="Stretch" LastChildFill="True">
                                                     <Button Command="{Binding CopyCommand}" DockPanel.Dock="Left"
                                                             Background="Transparent"
+                                                            Width="28" Height="28"
+                                                            VerticalAlignment="Top"
                                                             ToolTip="Copy to clipboard">
-                                                        <Image Source="/Images/copy24.png" Width="24" Height="24"/>
+                                                        <Image Source="/Images/copy24.png" 
+                                                               Style="{StaticResource Image24}"/>
                                                     </Button>
-                                                    <TextBox Text="{Binding Text}" FontSize="16" />
+                                                    <TextBox Text="{Binding Text}" 
+                                                             AcceptsReturn="True"
+                                                             ClipToBounds="True"
+                                                             TextWrapping="Wrap"
+                                                             MinLines="4" 
+                                                             FontSize="16" />
                                                 </DockPanel>
                                             </StackPanel>
                                         </DataTemplate>
@@ -119,12 +129,14 @@
                                                     <Button Command="{Binding CopyCommand}" DockPanel.Dock="Left"
                                                             Background="Transparent"
                                                             ToolTip="Copy to clipboard">
-                                                        <Image Source="/Images/copy24.png" Width="24" Height="24"/>
+                                                        <Image Source="/Images/copy24.png" 
+                                                               Style="{StaticResource Image24}"/>
                                                     </Button>
                                                     <ToggleButton x:Name="togglePasswordView"
                                                         DockPanel.Dock="Right" Background="Transparent"
                                                         ToolTip="Toggle password visibility">
-                                                        <Image Source="/Images/view24.png" Width="24" Height="24"/>
+                                                        <Image Source="/Images/view24.png" 
+                                                               Style="{StaticResource Image24}"/>
                                                     </ToggleButton>
                                                     <Grid>
                                                         <PasswordBox util:PasswordHelper.Attach="True" 

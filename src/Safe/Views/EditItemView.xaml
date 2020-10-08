@@ -59,7 +59,7 @@
                     Command="{Binding CancelCommand}" />
         </StackPanel>
 
-        <ScrollViewer HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto"
+        <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto"
                       Margin="5">
             <ItemsControl ItemsSource="{Binding Item.Fields}">
                 <ItemsControl.ItemTemplate>

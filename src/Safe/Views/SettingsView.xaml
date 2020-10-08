@@ -18,7 +18,7 @@
                     Content="Cancel" 
                     Command="{Binding CancelCommand}" />
         </StackPanel>
-        <ScrollViewer HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Auto">
+        <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
             <StackPanel Orientation="Vertical" HorizontalAlignment="Stretch">
                 <TextBlock Text="Storage path:" Style="{StaticResource Label}" />
                 <DockPanel LastChildFill="True">
