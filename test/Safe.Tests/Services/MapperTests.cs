@@ -22,7 +22,7 @@ namespace Safe.Tests.Services
 
         [Theory]
         [AutoData]
-        public void From_configuration_to_settings(string language, string storagePath)
+        public void From_configuration_to_settings(string storagePath)
         {
             // Arrange
 
@@ -46,7 +46,7 @@ namespace Safe.Tests.Services
 
         [Theory]
         [AutoData]
-        public void From_settings_to_configuration(string language, string storagePath)
+        public void From_settings_to_configuration(string storagePath)
         {
             // Arrange
 
