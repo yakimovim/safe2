@@ -23,6 +23,7 @@
                 <MenuItem Header="Change password..." Command="{Binding ChangePasswordCommand}"
                           Visibility="{Binding CanChangePassword, Converter={StaticResource visibilityConverter}}"/>
                 <MenuItem Header="Settings (Ctrl-S)..." Command="{Binding SettingsCommand}"/>
+                <MenuItem Header="Export..." Command="{Binding ExportCommand}"/>
                 <Separator/>
                 <MenuItem Header="Exit" Command="{Binding ExitCommand}"/>
             </MenuItem>

@@ -1,6 +1,11 @@
 ﻿using Safe.Core.Domain;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using Newtonsoft.Json;
+using Safe.Core.Services.Export;
 
 namespace Safe.Core.Services
 {
@@ -52,6 +57,11 @@ namespace Safe.Core.Services
         /// </summary>
         /// <param name="container">Content of the storage.</param>
         void Save(Container container);
+        /// <summary>
+        /// Exports content of the storage into a JSON file.
+        /// </summary>
+        /// <param name="targetFileName">Name of the JSON file.</param>
+        void Export(string targetFileName);
     }
 
     /// <summary>
@@ -177,6 +187,70 @@ namespace Safe.Core.Services
             if (!LoggedIn) throw new InvalidOperationException("You are not logged in");
 
             InternalSave(container, _password);
+        }
+
+        public void Export(string targetFileName)
+        {
+            var container = Read();
+
+            var exportItems = new LinkedList<ExportItem>();
+
+            foreach (var item in container.Items)
+            {
+                exportItems.AddLast(new ExportItem
+                {
+                    Title = item.Title,
+                    Description = item.Description,
+                    Tags = item.Tags.Any() ? item.Tags.ToArray() : null,
+                    Fields = item.Fields.Any() ? CreateFields(item.Fields) : null
+                });
+            }
+
+            using (var fileStream = File.OpenWrite(targetFileName))
+            using (var writer = new StreamWriter(fileStream))
+            {
+                JsonSerializer serializer = JsonSerializer.CreateDefault(new JsonSerializerSettings
+                {
+                    NullValueHandling = NullValueHandling.Ignore
+                });
+
+                serializer.Serialize(writer, exportItems);
+            }
+        }
+
+        private ExportField[] CreateFields(IList<Field> fields)
+        {
+            var exportFields = new LinkedList<ExportField>();
+
+            foreach (var field in fields)
+            {
+                if (field is SingleLineTextField slf)
+                {
+                    exportFields.AddLast(new ExportTextField
+                    {
+                        Name = slf.Label,
+                        Text = slf.Text
+                    });
+                }
+                else if (field is MultiLineTextField mlf)
+                {
+                    exportFields.AddLast(new ExportTextField
+                    {
+                        Name = mlf.Label,
+                        Text = mlf.Text
+                    });
+                }
+                else if (field is PasswordField pf)
+                {
+                    exportFields.AddLast(new ExportPasswordField()
+                    {
+                        Name = pf.Label,
+                        Password = pf.Text
+                    });
+                }
+            }
+
+            return exportFields.ToArray();
         }
 
         private void InternalSave(Container container, Password password)

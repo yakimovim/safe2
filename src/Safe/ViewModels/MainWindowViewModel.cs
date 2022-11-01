@@ -4,6 +4,7 @@ using Safe.Core.Services;
 using Safe.Services;
 using System;
 using System.Windows;
+using Microsoft.Win32;
 
 namespace Safe.ViewModels
 {
@@ -28,7 +29,25 @@ namespace Safe.ViewModels
 
             SettingsCommand = new DelegateCommand(Settings);
 
+            ExportCommand = new DelegateCommand(Export);
+
             ExitCommand = new DelegateCommand(Exit);
+        }
+
+        private void Export()
+        {
+            var openDialog = new OpenFileDialog
+            {
+                CheckFileExists = false,
+                CheckPathExists = false,
+                AddExtension = true,
+                DefaultExt = ".json",
+            };
+
+            if (openDialog.ShowDialog() == true)
+            {
+                _storage.Export(openDialog.FileName);
+            }
         }
 
         private void GeneratePassword()
@@ -63,6 +82,8 @@ namespace Safe.ViewModels
         public DelegateCommand ChangePasswordCommand { get; }
 
         public DelegateCommand SettingsCommand { get; }
+        
+        public DelegateCommand ExportCommand { get; }
 
         public DelegateCommand ExitCommand { get; }
     }
